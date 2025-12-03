@@ -9,7 +9,7 @@ function registerUser(newUser) {
     .then((res) => res.json())
     .then((data) => {
       console.log("User registered:", data);
-      window.location.href = "login.html";
+      window.location.href = "./frontend/login.html";
     })
     .catch((err) => console.log(err));
 }
@@ -41,32 +41,32 @@ function loginUser(email, password ,code = null) {
     .catch((err) => console.log(err));
 }
 
-// function adminLogin(email, password, code) {
-//   fetch(`http://localhost:3001/users?email=${email}`)
-//     .then((res) => res.json())
-//     .then((users) => {
-//       if (users.length === 0) {
-//         showToast("Email not found!", "error");
-//         return;
-//       }
+function adminLogin(email, password, code) {
+  fetch(`http://localhost:3001/users?email=${email}`)
+    .then((res) => res.json())
+    .then((users) => {
+      if (users.length === 0) {
+        showToast("Email not found!", "error");
+        return;
+      }
 
-//       const user = users[0];
+      const user = users[0];
 
-//       if (user.password === password && user.adminAccessCode === code) {
+      if (user.password === password && user.adminAccessCode === code) {
         
-//         // login success
-//         showToast("Login Successful!", "success");
-//         localStorage.setItem("user", JSON.stringify(user));
+        // login success
+        showToast("Login Successful!", "success");
+        localStorage.setItem("user", JSON.stringify(user));
 
-//         setTimeout(() => {
-//           window.location.href = "home.html";
-//         }, 1200);
-//       } else {
-//         showToast("Wrong password!", "error");
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// }
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1200);
+      } else {
+        showToast("Wrong password!", "error");
+      }
+    })
+    .catch((err) => console.log(err));
+}
 
 
 function showToast(message, type = "success") {
