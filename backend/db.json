@@ -18,6 +18,20 @@
       "email": "reem@gmail.com",
       "phone": "01100000000",
       "password": "123"
+    },
+    {
+      "id": "927e",
+      "name": "Aretha Tyson",
+      "email": "gunihora@mailinator.com",
+      "phone": "+1 (862) 721-6975",
+      "password": "Pa$$w0rd!"
+    },
+    {
+      "id": "987b",
+      "name": "Cheryl Chang",
+      "email": "jucodaqusy@mailinator.com",
+      "phone": "+1 (967) 859-2332",
+      "password": "Pa$$w0rd!"
     }
   ]
 }

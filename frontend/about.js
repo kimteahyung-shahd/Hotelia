@@ -85,63 +85,63 @@ function loadBookingHistory() {
 }
 
 // Generate mock bookings for demonstration
-function generateMockBookings() {
-  const mockBookings = [
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Nile Luxury Resort",
-      location: "Cairo, Egypt",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-      checkIn: "2024-11-15",
-      checkOut: "2024-11-18",
-      guests: 2,
-      roomType: "Deluxe Room",
-      totalAmount: 5443,
-      status: "confirmed",
-      bookingDate: "2024-10-20",
-      email: currentUser?.email || "user@example.com",
-    },
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Red Sea Paradise",
-      location: "Hurghada, Red Sea",
-      image:
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
-      checkIn: "2024-10-05",
-      checkOut: "2024-10-10",
-      guests: 2,
-      roomType: "Sea View Room",
-      totalAmount: 4850,
-      status: "confirmed",
-      bookingDate: "2024-09-15",
-      email: currentUser?.email || "user@example.com",
-    },
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Aswan Oasis Retreat",
-      location: "Aswan, Upper Egypt",
-      image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
-      checkIn: "2024-08-20",
-      checkOut: "2024-08-23",
-      guests: 3,
-      roomType: "Suite",
-      totalAmount: 3950,
-      status: "cancelled",
-      bookingDate: "2024-08-01",
-      cancellationDate: "2024-08-18",
-      email: currentUser?.email || "user@example.com",
-    },
-  ];
+// function generateMockBookings() {
+//   const mockBookings = [
+//     {
+//       confirmationNumber:
+//         "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
+//       hotelName: "Nile Luxury Resort",
+//       location: "Cairo, Egypt",
+//       image:
+//         "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
+//       checkIn: "2024-11-15",
+//       checkOut: "2024-11-18",
+//       guests: 2,
+//       roomType: "Deluxe Room",
+//       totalAmount: 5443,
+//       status: "confirmed",
+//       bookingDate: "2024-10-20",
+//       email: currentUser?.email || "user@example.com",
+//     },
+//     {
+//       confirmationNumber:
+//         "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
+//       hotelName: "Red Sea Paradise",
+//       location: "Hurghada, Red Sea",
+//       image:
+//         "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
+//       checkIn: "2024-10-05",
+//       checkOut: "2024-10-10",
+//       guests: 2,
+//       roomType: "Sea View Room",
+//       totalAmount: 4850,
+//       status: "confirmed",
+//       bookingDate: "2024-09-15",
+//       email: currentUser?.email || "user@example.com",
+//     },
+//     {
+//       confirmationNumber:
+//         "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
+//       hotelName: "Aswan Oasis Retreat",
+//       location: "Aswan, Upper Egypt",
+//       image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
+//       checkIn: "2024-08-20",
+//       checkOut: "2024-08-23",
+//       guests: 3,
+//       roomType: "Suite",
+//       totalAmount: 3950,
+//       status: "cancelled",
+//       bookingDate: "2024-08-01",
+//       cancellationDate: "2024-08-18",
+//       email: currentUser?.email || "user@example.com",
+//     },
+//   ];
 
-  // Save mock bookings
-  localStorage.setItem("userBookings", JSON.stringify(mockBookings));
+//   // Save mock bookings
+//   localStorage.setItem("userBookings", JSON.stringify(mockBookings));
 
-  return mockBookings;
-}
+//   return mockBookings;
+// }
 
 // Calculate user statistics
 function calculateStatistics() {

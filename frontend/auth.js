@@ -9,7 +9,7 @@ function registerUser(newUser) {
     .then((res) => res.json())
     .then((data) => {
       console.log("User registered:", data);
-      window.location.href = "home.html";
+      window.location.href = "login.html";
     })
     .catch((err) => console.log(err));
 }
