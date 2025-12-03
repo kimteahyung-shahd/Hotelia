@@ -147,10 +147,8 @@ function processPayment() {
       .getElementById("cardNumber")
       .value.replace(/\s/g, "");
     const cardName = document.getElementById("cardName").value.trim();
-    const cardExpiry = document.getElementById("cardExpiry").value;
-    const cardCvv = document.getElementById("cardCvv").value;
 
-    if (!cardNumber || !cardName || !cardExpiry || !cardCvv) {
+    if (!cardNumber || !cardName) {
       alert("Please fill in all card details.");
       return;
     }
@@ -159,40 +157,45 @@ function processPayment() {
       alert("Please enter a valid card number.");
       return;
     }
-
-    if (cardCvv.length !== 3) {
-      alert("Please enter a valid CVV.");
-      return;
-    }
   }
 
   // Generate confirmation number
   const confirmationNumber =
-    "EGYPT-" +
+    "HTLA-" +
     new Date().getFullYear() +
     "-" +
     Math.random().toString(36).substr(2, 9).toUpperCase();
-  document.getElementById("confirmationNumber").textContent =
-    confirmationNumber;
 
-  // Show success modal
-  const modal = document.getElementById("successModal");
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
+  // Get additional details
+  const address = document.getElementById("address")?.value || "";
+  const city = document.getElementById("city")?.value || "";
+  const specialRequests =
+    document.getElementById("specialRequests")?.value || "";
+
+  // Store booking details for confirmation page
+  const bookingData = {
+    confirmationNumber: confirmationNumber,
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phone: phone,
+    address: address,
+    city: city,
+    paymentMethod: selectedPaymentMethod,
+    specialRequests: specialRequests,
+    bookingDate: new Date().toISOString(),
+  };
+
+  // Store cart items before clearing
+  const confirmedCart = JSON.parse(JSON.stringify(cart.items));
+
+  // Save to sessionStorage for confirmation page
+  sessionStorage.setItem("bookingData", JSON.stringify(bookingData));
+  sessionStorage.setItem("confirmedCart", JSON.stringify(confirmedCart));
 
   // Clear cart
   cart.clear();
 
-  // Store booking details (optional - for confirmation page)
-  const bookingDetails = {
-    confirmationNumber: confirmationNumber,
-    customerName: `${firstName} ${lastName}`,
-    email: email,
-    phone: phone,
-    paymentMethod: selectedPaymentMethod,
-    bookingDate: new Date().toISOString(),
-    specialRequests: document.getElementById("specialRequests").value,
-  };
-
-  console.log("Booking completed:", bookingDetails);
+  // Redirect to confirmation page
+  window.location.href = "confirmation.html";
 }

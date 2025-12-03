@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Booking Confirmed - Hotelia</title>
+    <link rel="icon" type="image/png" href="../image/travel-agency.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .animate-slide-down {
+        animation: slideDown 0.5s ease-out;
+      }
+      @keyframes checkmark {
+        0% {
+          transform: scale(0);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      .animate-checkmark {
+        animation: checkmark 0.6s ease-out;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <img
+              src="../image/travel-agency.png"
+              alt="Hotelia"
+              class="w-10 h-10"
+            />
+            <span class="text-2xl font-bold text-[#003262]">Hotelia</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="home.html"
+              class="text-gray-700 hover:text-[#003072] font-medium"
+            >
+              <i class="fas fa-home mr-2"></i>Back to Home
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Confirmation Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <!-- Success Message -->
+      <div
+        class="bg-white rounded-lg shadow-lg p-8 mb-8 text-center animate-slide-down"
+      >
+        <div
+          class="bg-green-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 animate-checkmark"
+        >
+          <i class="fas fa-check text-green-600 text-5xl"></i>
+        </div>
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+          Booking Confirmed!
+        </h1>
+        <p class="text-gray-600 mb-6">
+          Thank you for choosing Hotelia. Your reservation has been successfully
+          confirmed.
+        </p>
+        <div class="bg-blue-50 rounded-lg p-4 inline-block">
+          <p class="text-sm text-gray-600 mb-1">Confirmation Number</p>
+          <p id="confirmationNumber" class="text-2xl font-bold text-[#0047AB]">
+            HTLA-2024-XXXX
+          </p>
+        </div>
+      </div>
+
+      <!-- Booking Details -->
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          <i class="fas fa-file-invoice text-[#0047AB] mr-2"></i>Booking Details
+        </h2>
+
+        <!-- Hotel Information -->
+        <div id="hotelInfo" class="mb-6 pb-6 border-b">
+          <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Guest Information -->
+        <div id="guestInfo" class="mb-6 pb-6 border-b">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">
+            Guest Information
+          </h3>
+          <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Reservation Details -->
+        <div id="reservationDetails" class="mb-6 pb-6 border-b">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">
+            Reservation Details
+          </h3>
+          <!-- Dynamically loaded -->
+        </div>
+
+        <!-- Price Summary -->
+        <div id="priceSummary">
+          <h3 class="text-lg font-bold text-gray-900 mb-4">Price Summary</h3>
+          <!-- Dynamically loaded -->
+        </div>
+      </div>
+
+      <!-- Important Information -->
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 mb-8">
+        <div class="flex items-start">
+          <i class="fas fa-info-circle text-yellow-600 text-xl mr-3 mt-1"></i>
+          <div>
+            <h3 class="font-bold text-gray-900 mb-2">Important Information</h3>
+            <ul class="text-sm text-gray-700 space-y-1">
+              <li>
+                • Please present this confirmation number at the hotel check-in
+              </li>
+              <li>• Check-in time is 2:00 PM and check-out time is 12:00 PM</li>
+              <li>
+                • For any changes or cancellations, please contact us at least
+                48 hours in advance
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a
+          href="home.html"
+          class="flex-1 bg-white border-2 border-[#0047AB] text-[#0047AB] py-3 rounded-lg font-semibold hover:bg-blue-50 transition text-center"
+        >
+          <i class="fas fa-home mr-2"></i>Back to Home
+        </a>
+        <a
+          onclick="showCancellationModal()"
+          class="flex-1 bg-white border-2 border-[#0047AB] text-[#0047AB] py-3 rounded-lg font-semibold hover:bg-blue-50 transition text-center"
+          ><i class="fa-solid fa-ban"></i> Cancel my booking</a
+        >
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-[#003262] text-white py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center mb-4">
+              <img src="../image/light.png" alt="Hotelia" class="w-10 h-10" />
+              <span class="text-2xl font-bold">Hotelia</span>
+            </div>
+            <p class="text-gray-300">
+              Your gateway to Egypt's finest accommodations
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-gray-300">
+              <li><a href="#" class="hover:text-white">About Us</a></li>
+              <li><a href="#" class="hover:text-white">Hotels</a></li>
+              <li><a href="#" class="hover:text-white">Destinations</a></li>
+              <li><a href="#" class="hover:text-white">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Support</h3>
+            <ul class="space-y-2 text-gray-300">
+              <li><a href="#" class="hover:text-white">Help Center</a></li>
+              <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" class="hover:text-white">FAQs</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Connect</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-300">
+          <p>&copy; 2024 Hotelia. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <div
+      id="cancellationModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+      style="display: none"
+    >
+      <div class="bg-white rounded-lg p-8 max-w-md mx-4 animate-slide-down">
+        <div class="text-center mb-6">
+          <div
+            class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <i class="fas fa-exclamation-triangle text-red-600 text-3xl"></i>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">Cancel Booking?</h2>
+          <p class="text-gray-600 mb-4">
+            Are you sure you want to cancel your booking?
+          </p>
+          <div class="bg-blue-50 rounded-lg p-4 text-left">
+            <p class="text-sm text-gray-600 mb-1">Confirmation Number</p>
+            <p
+              id="modalConfirmationNumber"
+              class="text-lg font-bold text-[#0047AB]"
+            >
+              HTLA-2024-XXXX
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Reason for Cancellation (Optional)</label
+          >
+          <textarea
+            id="cancellationReason"
+            rows="3"
+            placeholder="Please let us know why you're canceling..."
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+          ></textarea>
+        </div>
+
+        <div class="flex gap-3">
+          <button
+            onclick="closeCancellationModal()"
+            class="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+          >
+            Keep Booking
+          </button>
+          <button
+            onclick="confirmCancellation()"
+            class="flex-1 bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition"
+          >
+            Yes, Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancellation Success Modal -->
+    <div
+      id="cancellationSuccessModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+      style="display: none"
+    >
+      <div
+        class="bg-white rounded-lg p-8 max-w-md mx-4 text-center animate-slide-down"
+      >
+        <div
+          class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 animate-checkmark"
+        >
+          <i class="fas fa-check text-green-600 text-4xl"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          Booking Cancelled Successfully
+        </h2>
+        <p class="text-gray-600 mb-6">
+          Your booking has been cancelled. A confirmation email will be sent to
+          you shortly.
+        </p>
+        <div class="bg-blue-50 rounded-lg p-4 mb-6">
+          <p class="text-sm text-gray-600 mb-1">Cancellation Reference</p>
+          <p
+            id="cancellationReference"
+            class="text-lg font-bold text-[#0047AB]"
+          >
+            CANC-2024-XXXX
+          </p>
+        </div>
+        <button
+          onclick="window.location.href='home.html'"
+          class="w-full bg-[#0047AB] text-white py-3 rounded-lg font-semibold hover:bg-[#003072] transition"
+        >
+          Back to Home
+        </button>
+      </div>
+    </div>
+
+    <script src="cart.js"></script>
+    <script src="confirmation.js"></script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotelia - My Profile</title>
+    <link rel="icon" type="image/png" href="../image/travel-agency.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <img
+              src="../image/travel-agency.png"
+              alt="Hotelia"
+              class="w-10 h-10"
+            />
+            <span class="text-2xl font-bold text-[#003262]">Hotelia</span>
+          </div>
+          <div class="hidden md:flex space-x-8">
+            <a
+              href="home.html"
+              class="text-[#003262] hover:text-[#0047AB] font-medium"
+              >Home</a
+            >
+            <a
+              href="hotels.html"
+              class="text-[#003262] hover:text-[#0047AB] font-medium"
+              >Hotels</a
+            >
+            <a
+              href="about.html"
+              class="text-[#0047AB] hover:text-[#0047AB] font-medium"
+              >About Me</a
+            >
+            <a
+              href="#footer"
+              class="text-[#003262] hover:text-[#0047AB] font-medium"
+              >Contact</a
+            >
+          </div>
+          <div class="flex items-center space-x-4">
+            <!-- Cart Icon -->
+            <a
+              href="cart.html"
+              class="relative text-gray-700 hover:text-[#0047AB]"
+            >
+              <i class="fas fa-shopping-cart text-2xl"></i>
+              <span
+                id="cartCount"
+                class="absolute -top-2 -right-2 bg-[#0066FF] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold"
+                style="display: none"
+                >0</span
+              >
+            </a>
+            <button
+              onclick="logout()"
+              class="text-red-600 hover:text-red-700 font-semibold"
+            >
+              <i class="fas fa-sign-out-alt mr-1"></i>Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Profile Header -->
+    <div class="bg-gradient-to-r from-[#003262] to-[#0047AB] text-white py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center space-x-6">
+          <div
+            class="bg-white w-32 h-32 rounded-full flex items-center justify-center"
+          >
+            <i class="fas fa-user text-[#0047AB] text-6xl"></i>
+          </div>
+          <div>
+            <h1 id="userName" class="text-4xl font-bold mb-2">Loading...</h1>
+            <p id="userEmail" class="text-blue-100 text-lg"></p>
+            <p id="userPhone" class="text-blue-100"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Profile Info -->
+        <div class="lg:col-span-1 space-y-6">
+          <!-- Personal Information Card -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-user-circle text-[#0047AB] mr-2"></i>Personal
+              Information
+            </h2>
+            <div class="space-y-4">
+              <div>
+                <label class="text-sm font-medium text-gray-600"
+                  >Full Name</label
+                >
+                <p id="profileName" class="text-gray-900 font-semibold">-</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-600">Email</label>
+                <p id="profileEmail" class="text-gray-900 font-semibold">-</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-600">Phone</label>
+                <p id="profilePhone" class="text-gray-900 font-semibold">-</p>
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-600"
+                  >Member Since</label
+                >
+                <p id="memberSince" class="text-gray-900 font-semibold">-</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Statistics Card -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-chart-line text-[#0047AB] mr-2"></i>My Statistics
+            </h2>
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Total Bookings</span>
+                <span
+                  id="totalBookings"
+                  class="text-2xl font-bold text-[#0047AB]"
+                  >0</span
+                >
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Total Spent</span>
+                <span id="totalSpent" class="text-2xl font-bold text-[#0047AB]"
+                  >$0</span
+                >
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600">Favorite Location</span>
+                <span
+                  id="favoriteLocation"
+                  class="text-lg font-bold text-[#0047AB]"
+                  >-</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions Card -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+            <div class="space-y-3">
+              <a
+                href="hotels.html"
+                class="block w-full bg-[#0047AB] text-white py-3 rounded-lg font-semibold hover:bg-[#003262] transition text-center"
+              >
+                <i class="fas fa-search mr-2"></i>Browse Hotels
+              </a>
+              <a
+                href="cart.html"
+                class="block w-full bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300 transition text-center"
+              >
+                <i class="fas fa-shopping-cart mr-2"></i>View Cart
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Booking History -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <i class="fas fa-history text-[#0047AB] mr-2"></i>Booking History
+            </h2>
+
+            <!-- Filter Tabs -->
+            <div class="flex space-x-4 mb-6 border-b">
+              <button
+                onclick="filterBookings('all')"
+                class="px-4 py-2 font-semibold text-[#0047AB] border-b-2 border-[#0047AB]"
+                id="allTab"
+              >
+                All Bookings
+              </button>
+              <button
+                onclick="filterBookings('confirmed')"
+                class="px-4 py-2 font-semibold text-gray-600 hover:text-[#0047AB]"
+                id="confirmedTab"
+              >
+                Confirmed
+              </button>
+              <button
+                onclick="filterBookings('cancelled')"
+                class="px-4 py-2 font-semibold text-gray-600 hover:text-[#0047AB]"
+                id="cancelledTab"
+              >
+                Cancelled
+              </button>
+            </div>
+
+            <!-- Bookings List -->
+            <div id="bookingsList" class="space-y-4">
+              <!-- Bookings will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer" class="bg-[#003262] text-white py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center mb-4">
+              <img src="../image/light.png" alt="Hotelia" class="w-10 h-10" />
+              <span class="text-2xl font-bold">Hotelia</span>
+            </div>
+            <p class="text-gray-300">
+              Your gateway to Egypt's finest accommodations
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-gray-300">
+              <li><a href="#" class="hover:text-white">About Us</a></li>
+              <li><a href="#" class="hover:text-white">Hotels</a></li>
+              <li><a href="#" class="hover:text-white">Destinations</a></li>
+              <li><a href="#" class="hover:text-white">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Support</h3>
+            <ul class="space-y-2 text-gray-300">
+              <li><a href="#" class="hover:text-white">Help Center</a></li>
+              <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" class="hover:text-white">FAQs</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Connect</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-gray-300 hover:text-white text-xl"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-300">
+          <p>&copy; 2024 Hotelia. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="cart.js"></script>
+    <script src="about.js"></script>
+  </body>
+</html>

@@ -392,3 +392,5 @@ document.addEventListener("DOMContentLoaded", () => {
     cart.renderCart();
   }
 });
+
+

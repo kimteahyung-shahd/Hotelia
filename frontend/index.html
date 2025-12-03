@@ -1,82 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotelia - Sign Up</title>
-    <link rel="icon" type="image/png" href="../image/travel-agency.png">
+    <link rel="icon" type="image/png" href="../image/travel-agency.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-gray-50">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50">
     <!-- Navigation -->
     <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <img src="../image/travel-agency.png" alt="Hotelia" class="w-10 h-10">
-                    <span class="text-2xl font-bold text-[#003262]">Hotelia</span>
-                </div>
-                <!-- <div class="hidden md:flex space-x-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <img
+              src="../image/travel-agency.png"
+              alt="Hotelia"
+              class="w-10 h-10"
+            />
+            <span class="text-2xl font-bold text-[#003262]">Hotelia</span>
+          </div>
+          <!-- <div class="hidden md:flex space-x-8">
                     <a href="home.html" class="text-gray-700 hover:text-blue-600">Home</a>
                     <a href="#" class="text-gray-700 hover:text-blue-600">Hotels</a>
                     <a href="#" class="text-gray-700 hover:text-blue-600">Contact</a>
                 </div> -->
-            </div>
         </div>
+      </div>
     </nav>
 
     <!-- Sign Up Form -->
-    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
-            <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-[#003262]">Create Account</h2>
-                <p class="mt-2 text-[#003262]">Join us to book amazing hotels in Egypt</p>
-            </div>
-
-            <form class="space-y-6">
-                <div>
-                    <label class="block text-sm font-medium text-[#003262] mb-2">Full Name</label>
-                    <input type="text" placeholder="Enter your full name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-[#003262] mb-2">Email Address</label>
-                    <input type="email" placeholder="Enter your email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-[#003262] mb-2">Phone Number</label>
-                    <input type="tel" placeholder="+20 XXX XXX XXXX" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-[#003262] mb-2">Password</label>
-                    <input type="password" placeholder="Create a password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-[#003262] mb-2">Confirm Password</label>
-                    <input type="password" placeholder="Confirm your password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-                </div>
-
-                <button type="submit" class="w-full bg-[#0047AB] text-white py-3 rounded-lg font-semibold hover:bg-[#003072] transition">
-                   <a href="home.html"> Sign Up</a>
-                </button>
-            </form>
-
-            <div class="mt-6 text-center">
-                <p class="text-[#003262]">Already have an account? <a href="login.html" class="text-[#0047AB] font-semibold hover:underline">Login</a></p>
-                <p class="mt-2 text-[#003262]">Admin? <a href="adminLogin.html" class="text-[#0047AB] font-semibold hover:underline">Admin Login</a></p>
-            </div>
+    <div
+      class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"
+    >
+      <div class="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-[#003262]">Create Account</h2>
+          <p class="mt-2 text-[#003262]">
+            Join us to book amazing hotels in Egypt
+          </p>
         </div>
+
+        <form id="registerForm" class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-[#003262] mb-2"
+              >Full Name</label
+            >
+            <input
+              id="name"
+              type="text"
+              placeholder="Enter your full name"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-[#003262] mb-2"
+              >Email Address</label
+            >
+            <input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-[#003262] mb-2"
+              >Phone Number</label
+            >
+            <input
+              id="phone"
+              type="tel"
+              placeholder="+20 XXX XXX XXXX"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-[#003262] mb-2"
+              >Password</label
+            >
+            <input
+              id="password"
+              type="password"
+              placeholder="Create a password"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-[#003262] mb-2"
+              >Confirm Password</label
+            >
+            <input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="w-full bg-[#0047AB] text-white py-3 rounded-lg font-semibold hover:bg-[#003072] transition"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <div class="mt-6 text-center">
+          <p class="text-[#003262]">
+            Already have an account?
+            <a
+              href="login.html"
+              class="text-[#0047AB] font-semibold hover:underline"
+              >Login</a
+            >
+          </p>
+          <p class="mt-2 text-[#003262]">
+            Admin?
+            <a
+              href="adminLogin.html"
+              class="text-[#0047AB] font-semibold hover:underline"
+              >Admin Login</a
+            >
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
     <footer class="bg-[#003262] text-white py-8 mt-16">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-white">2024 Hotelia. All rights reserved.</p>
-        </div>
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-white">2024 Hotelia. All rights reserved.</p>
+      </div>
     </footer>
-</body>
+
+    <script src="auth.js"></script>
+    <script src="register.js"></script>
+  </body>
 </html>

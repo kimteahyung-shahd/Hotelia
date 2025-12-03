@@ -1,7 +1,23 @@
 {
-    "users": [
-      { "id": 1, "name": "shahd abdelrahman", "email": "shahd.abdelrahman@example.com", "password": "123456" },
-      { "id": 2, "name": "ahmed abdelrahman", "email": "ahmed.abdelrahman@example.com", "password": "123456" }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "1",
+      "name": "shahd abdelrahman",
+      "email": "shahd.abdelrahman@example.com",
+      "password": "123456"
+    },
+    {
+      "id": "2",
+      "name": "ahmed abdelrahman",
+      "email": "ahmed.abdelrahman@example.com",
+      "password": "123456"
+    },
+    {
+      "id": "bc29",
+      "name": "remo",
+      "email": "reem@gmail.com",
+      "phone": "01100000000",
+      "password": "123"
+    }
+  ]
+}

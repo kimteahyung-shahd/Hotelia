@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hotelia</title>
-    <link rel="icon" type="image/png" href="../image/travel-agency.png">
+    <link rel="icon" type="image/png" href="../image/travel-agency.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       rel="stylesheet"
@@ -17,7 +17,11 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
-            <img src="../image/travel-agency.png" alt="Hotelia" class="w-10 h-10">
+            <img
+              src="../image/travel-agency.png"
+              alt="Hotelia"
+              class="w-10 h-10"
+            />
             <span class="text-2xl font-bold text-[#003262]">Hotelia</span>
           </div>
 
@@ -86,6 +90,7 @@
                   >
                   <input
                     type="text"
+                    id="firstName"
                     placeholder="Enter first name"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -97,6 +102,7 @@
                   >
                   <input
                     type="text"
+                    id="lastName"
                     placeholder="Enter last name"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -111,6 +117,7 @@
                   >
                   <input
                     type="email"
+                    id="email"
                     placeholder="your@email.com"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -122,6 +129,7 @@
                   >
                   <input
                     type="tel"
+                    id="phone"
                     placeholder="+20 XXX XXX XXXX"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
@@ -131,25 +139,10 @@
 
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-2"
-                  >Country *</label
-                >
-                <select
-                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <option>Egypt</option>
-                  <option>United States</option>
-                  <option>United Kingdom</option>
-                  <option>Saudi Arabia</option>
-                  <option>United Arab Emirates</option>
-                  <option>Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2"
                   >Special Requests (Optional)</label
                 >
                 <textarea
+                  id="specialRequests"
                   rows="3"
                   placeholder="Any special requirements or requests..."
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -171,6 +164,7 @@
                 >
                 <input
                   type="text"
+                  id="cardName"
                   placeholder="Name on card"
                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
@@ -184,6 +178,7 @@
                 <div class="relative">
                   <input
                     type="text"
+                    id="cardNumber"
                     placeholder="1234 5678 9012 3456"
                     maxlength="19"
                     class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -193,33 +188,6 @@
                     <i class="fab fa-cc-visa text-2xl text-blue-600"></i>
                     <i class="fab fa-cc-mastercard text-2xl text-red-600"></i>
                   </div>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2"
-                    >Expiry Date *</label
-                  >
-                  <input
-                    type="text"
-                    placeholder="MM/YY"
-                    maxlength="5"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2"
-                    >CVV *</label
-                  >
-                  <input
-                    type="text"
-                    placeholder="123"
-                    maxlength="3"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
                 </div>
               </div>
 
@@ -236,9 +204,8 @@
               </div>
             </form>
           </div>
-
           <!-- Terms & Conditions -->
-          <div class="bg-white rounded-lg shadow-lg p-6">
+          <!-- <div class="bg-white rounded-lg shadow-lg p-6">
             <div class="space-y-4">
               <div class="flex items-start">
                 <input
@@ -271,15 +238,15 @@
                 </label>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- Complete Booking Button -->
           <button
+            onclick="processPayment()"
+            type="button"
             class="w-full bg-[#0047AB] text-white py-4 rounded-lg font-bold text-lg hover:bg-[#003072] transition shadow-lg"
-          ><a href="payment.html">
+          >
             <i class="fas fa-check-circle mr-2"></i>Complete Booking
-          </a>
-            
           </button>
         </div>
 
@@ -412,7 +379,7 @@
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <div class="flex items-center mb-4">
-              <img src="../image/light.png" alt="Hotelia" class="w-10 h-10">
+              <img src="../image/light.png" alt="Hotelia" class="w-10 h-10" />
               <span class="text-2xl font-bold">Hotelia</span>
             </div>
             <p class="text-gray-300">
@@ -460,5 +427,8 @@
         </div>
       </div>
     </footer>
+
+    <script src="cart.js"></script>
+    <script src="checkout.js"></script>
   </body>
 </html>
