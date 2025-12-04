@@ -1,72 +1,71 @@
 function registerUser(newUser) {
-  fetch("http://localhost:3001/users", {
+  let url = "http://localhost:3001/users";
+
+  // If admin code exists → save in adminUsers
+  if (newUser.adminAccessCode && newUser.adminAccessCode !== "") {
+    url = "http://localhost:3001/adminUsers";
+  }
+  fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(newUser),
+    body: JSON.stringify(newUser)
   })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("User registered:", data);
-      window.location.href = "login.html";
+    
+    .then(res => res.json())
+    .then(data => {
+      setTimeout(() => {
+        showToast("Registered Successfully!", "success");
+        window.location.href = "login.html";
+      }, 200);
     })
-    .catch((err) => console.log(err));
+    .catch(err => console.log(err));
 }
 
-function loginUser(email, password ,code = null) {
-  fetch(`http://localhost:3001/users?email=${email}`)
-    .then((res) => res.json())
-    .then((users) => {
-      if (users.length === 0) {
-        showToast("Email not found!", "error");
-        return;
-      }
 
+async function loginUser(email, password, code = "") {
+  try {
+    // check normal users
+    const userRes = await fetch(`http://localhost:3001/users?email=${email}`);
+    const users = await userRes.json();
+
+    if (users.length > 0) {
       const user = users[0];
 
-      if (user.password === password || user.adminAccessCode === code) {
-        
-        // login success
+      if (user.password === password) {
         showToast("Login Successful!", "success");
         localStorage.setItem("user", JSON.stringify(user));
-
         setTimeout(() => {
           window.location.href = "home.html";
-        }, 1200);
-      } else {
-        showToast("Wrong password!", "error");
+        }, 1000);
+        return;
       }
-    })
-    .catch((err) => console.log(err));
+    }
+
+    // check admin users
+    const adminRes = await fetch(`http://localhost:3001/adminUsers?email=${email}`);
+    const admins = await adminRes.json();
+
+    if (admins.length > 0) {
+      const admin = admins[0];
+
+      if (admin.password === password && admin.adminAccessCode === code) {
+        showToast("Admin Login Successful!", "success");
+        localStorage.setItem("admin", JSON.stringify(admin));
+        setTimeout(() => {
+          window.location.href = "adminPage.html";
+        }, 1000);
+        return;
+      }
+    }
+
+    showToast("Incorrect Email / Password / Code!", "error");
+
+  } catch (err) {
+    console.log(err);
+  }
 }
-
-// function adminLogin(email, password, code) {
-//   fetch(`http://localhost:3001/users?email=${email}`)
-//     .then((res) => res.json())
-//     .then((users) => {
-//       if (users.length === 0) {
-//         showToast("Email not found!", "error");
-//         return;
-//       }
-
-//       const user = users[0];
-
-//       if (user.password === password && user.adminAccessCode === code) {
-        
-//         // login success
-//         showToast("Login Successful!", "success");
-//         localStorage.setItem("user", JSON.stringify(user));
-
-//         setTimeout(() => {
-//           window.location.href = "home.html";
-//         }, 1200);
-//       } else {
-//         showToast("Wrong password!", "error");
-//       }
-//     })
-//     .catch((err) => console.log(err));
-// }
 
 
 function showToast(message, type = "success") {

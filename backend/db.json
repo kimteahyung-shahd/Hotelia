@@ -55,20 +55,11 @@
       "password": "123456"
     },
     {
-      "id": "4e76",
-      "name": "habiba",
-      "email": "habiba.ahmed32143@gmail.com",
-      "phone": "01022996835",
-      "password": "123456",
-      "adminAccessCode": "123"
-    },
-    {
       "id": "c84f",
       "name": "habiba",
       "email": "habiba.ahmed32143@gmail.com",
       "phone": "01022996835",
-      "password": "Ss33820464",
-      "adminAccessCode": ""
+      "password": "Ss33820464"
     },
     {
       "id": "b7fb",
@@ -89,8 +80,902 @@
       "name": "maream",
       "email": "maream.ragab@gmail.com",
       "phone": "01022337414",
+      "password": "1234"
+    },
+    {
+      "id": "a74d",
+      "name": "habiba",
+      "email": "habiba.ahmed32143@gmail.com",
+      "phone": "01022337414",
+      "password": "Ss338"
+    },
+    {
+      "id": "c51a",
+      "name": "sh",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "7a6f",
+      "name": "sh",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "254e",
+      "name": "shahd",
+      "email": "shahd.ahmed32143@gmail.com",
+      "phone": "01022337414",
+      "password": "shahd"
+    },
+    {
+      "id": "196a",
+      "name": "42310188.shahd",
+      "email": "shahd.ahmed32143@gmail.com",
+      "phone": "01022337414",
+      "password": "ahmed"
+    },
+    {
+      "id": "9140",
+      "name": "hana",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "fafa"
+    },
+    {
+      "id": "5f10",
+      "name": "hana",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "fafa"
+    },
+    {
+      "id": "ba01",
+      "name": "hana",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "fafa"
+    },
+    {
+      "id": "e5e0",
+      "name": "ahmed",
+      "email": "ahmed@gmail.com",
+      "phone": "01022337414",
+      "password": "shahd",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "b841",
+      "name": "laila ahmed",
+      "email": "laila@gmail.com",
+      "phone": "01022337414",
       "password": "1234",
       "adminAccessCode": ""
+    },
+    {
+      "id": "d32b",
+      "name": "laila ahmed",
+      "email": "laila@gmail.com",
+      "phone": "01022337414",
+      "password": "1234",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "fe24",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "2e5e",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "49f9",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "5844",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "fd71",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "98d9",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "296f",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "f5e9",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "644e",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "bafd",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "3a97",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "c761",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "31d4",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "2127",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "d9b8",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "3cef",
+      "name": "",
+      "email": "",
+      "phone": "",
+      "password": "",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "546a",
+      "name": "youssef",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "1234",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "803e",
+      "name": "youssef",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "1234",
+      "adminAccessCode": ""
+    },
+    {
+      "id": "d88b",
+      "name": "42310188.shahd",
+      "email": "shahd.ahmed32143@gmail.com",
+      "phone": "01022337414",
+      "password": "2222",
+      "adminAccessCode": ""
+    }
+  ],
+  "adminUsers": [
+    {
+      "id": "4e76",
+      "name": "habiba",
+      "email": "habiba.ahmed32143@gmail.com",
+      "phone": "01022996835",
+      "password": "123456",
+      "adminAccessCode": "123"
+    },
+    {
+      "id": "38f3",
+      "name": "ahmed",
+      "email": "ahmed@gmail.com",
+      "phone": "01022337414",
+      "password": "ahmed",
+      "adminAccessCode": "1234"
+    },
+    {
+      "id": "4c39",
+      "name": "hana",
+      "email": "youssef@gmail.com",
+      "phone": "01022337414",
+      "password": "hana",
+      "adminAccessCode": "hana"
+    }
+  ],
+  "hotels": [
+    {
+      "id": "nile-luxury",
+      "name": "Nile Luxury Resort",
+      "location": "Corniche El Nil, Cairo, Egypt",
+      "shortLocation": "Cairo, Egypt",
+      "price": 1200,
+      "rating": 5,
+      "reviews": 248,
+      "image": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200",
+      "description": "Experience the ultimate luxury on the banks of the majestic Nile River. Our five-star resort offers breathtaking views of the pyramids and combines modern elegance with authentic Egyptian hospitality.",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Swimming Pool"
+        },
+        {
+          "icon": "fa-spa",
+          "name": "Spa & Wellness"
+        },
+        {
+          "icon": "fa-utensils",
+          "name": "Restaurant"
+        },
+        {
+          "icon": "fa-dumbbell",
+          "name": "Fitness Center"
+        },
+        {
+          "icon": "fa-wifi",
+          "name": "Free WiFi"
+        },
+        {
+          "icon": "fa-parking",
+          "name": "Free Parking"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Standard Room",
+          "description": "Perfect for solo travelers",
+          "price": 1200,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "1 Single Bed",
+          "guests": 1,
+          "size": "25 m²"
+        },
+        {
+          "name": "Deluxe Room",
+          "description": "Comfortable stay for couples",
+          "price": 1500,
+          "image": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=400",
+          "beds": "1 Double Bed",
+          "guests": 2,
+          "size": "35 m²"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
+    },
+    {
+      "id": "red-sea",
+      "name": "Red Sea Paradise",
+      "location": "Hurghada, Red Sea",
+      "shortLocation": "Hurghada, Red Sea",
+      "price": 900,
+      "rating": 4,
+      "reviews": 186,
+      "image": "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+      "description": "Beachfront resort with world-class diving and crystal clear waters. Perfect for water sports enthusiasts and beach lovers.",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Swimming Pool"
+        },
+        {
+          "icon": "fa-umbrella-beach",
+          "name": "Private Beach"
+        },
+        {
+          "icon": "fa-water",
+          "name": "Diving Center"
+        },
+        {
+          "icon": "fa-wifi",
+          "name": "Free WiFi"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Deluxe Room",
+          "description": "Comfortable room with garden view",
+          "price": 900,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "2 Single Beds",
+          "guests": 2,
+          "size": "30 m²"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
+    },
+    {
+      "id": "alexandria-bay",
+      "name": "Alexandria Bay Hotel",
+      "location": "Alexandria, Mediterranean",
+      "shortLocation": "Alexandria, Mediterranean",
+      "price": 750,
+      "rating": 4,
+      "reviews": 142,
+      "image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200",
+      "description": "Modern hotel overlooking the Mediterranean with rich historical surroundings.",
+      "amenities": [
+        {
+          "icon": "fa-wifi",
+          "name": "Free WiFi"
+        },
+        {
+          "icon": "fa-utensils",
+          "name": "Restaurant"
+        },
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Pool"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Standard Room",
+          "description": "Cozy room with city view",
+          "price": 750,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "1 Double Bed",
+          "guests": 2,
+          "size": "28 m²"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
+    },
+    {
+      "id": "aswan-oasis",
+      "name": "Aswan Oasis Retreat",
+      "location": "Aswan, Upper Egypt",
+      "shortLocation": "Aswan, Upper Egypt",
+      "price": 850,
+      "rating": 5,
+      "reviews": 167,
+      "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200",
+      "description": "Boutique hotel near ancient temples with Nile views and traditional hospitality.",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Pool"
+        },
+        {
+          "icon": "fa-utensils",
+          "name": "Restaurant"
+        },
+        {
+          "icon": "fa-spa",
+          "name": "Spa"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Standard Room",
+          "description": "Traditional décor with modern comfort",
+          "price": 850,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "1 Queen Bed",
+          "guests": 2,
+          "size": "32 m²"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
+    },
+    {
+      "id": "luxor-valley",
+      "name": "Luxor Valley Resort",
+      "location": "Luxor, Upper Egypt",
+      "shortLocation": "Luxor, Upper Egypt",
+      "price": 1100,
+      "rating": 4.5,
+      "reviews": 203,
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=1200",
+      "description": "Elegant resort steps away from the Valley of Kings and ancient wonders.",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Pool"
+        },
+        {
+          "icon": "fa-spa",
+          "name": "Spa & Wellness"
+        },
+        {
+          "icon": "fa-utensils",
+          "name": "Restaurant"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Suite",
+          "description": "Comfortable room with pool view",
+          "price": 1100,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "2 Single Beds",
+          "guests": 2,
+          "size": "30 m²"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
+    },
+    {
+      "id": "sharm-paradise",
+      "name": "Sharm Paradise Beach",
+      "location": "Sharm El Sheikh, Sinai",
+      "shortLocation": "Sharm El Sheikh, Sinai",
+      "price": 950,
+      "rating": 4,
+      "reviews": 194,
+      "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200",
+      "description": "All-inclusive beach resort with spectacular coral reefs and desert adventures.",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Multiple Pools"
+        },
+        {
+          "icon": "fa-umbrella-beach",
+          "name": "Private Beach"
+        },
+        {
+          "icon": "fa-water",
+          "name": "Diving Center"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Family Room",
+          "description": "All-inclusive comfort",
+          "price": 950,
+          "image": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400",
+          "beds": "2 Single Beds",
+          "guests": 2,
+          "size": "32 m²"
+        }
+      ]
+    },
+    {
+      "id": "hotel-1764882169498",
+      "name": "Rest Detail Hotel Hua Hin",
+      "location": "Thailand",
+      "shortLocation": "Thailand",
+      "price": 2000,
+      "rating": 3.5,
+      "reviews": 3000,
+      "image": "https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?cs=srgb&dl=dug-out-pool-hotel-poolside-1134176.jpg&fm=jpg",
+      "description": "Overlooking the Gulf of Siam, Rest Detail offers relaxing stays in chic beachfront accommodation with free Wi-Fi. Featuring a spa, \n",
+      "amenities": [
+        {
+          "icon": "fa-swimming-pool",
+          "name": "Swimming Pool"
+        },
+        {
+          "icon": "fa-spa",
+          "name": "Spa & Wellness"
+        },
+        {
+          "icon": "fa-utensils",
+          "name": "Restaurant"
+        },
+        {
+          "icon": "fa-dumbbell",
+          "name": "Fitness Center"
+        },
+        {
+          "icon": "fa-wifi",
+          "name": "Free WiFi"
+        }
+      ],
+      "rooms": [
+        {
+          "name": "Family Room",
+          "description": "good",
+          "price": 2000,
+          "image": "https://images.pexels.com/photos/1134176/pexels-photo-1134176.jpeg?cs=srgb&dl=dug-out-pool-hotel-poolside-1134176.jpg&fm=jpg",
+          "beds": "5 beds",
+          "guests": 5,
+          "size": "100m"
+        }
+      ],
+      "meals": [
+        {
+          "id": "full-board",
+          "name": "Full Board",
+          "subtitle": "All meals included",
+          "price": 85,
+          "available": true,
+          "icon": "fa-utensils",
+          "color": "#E4D00A",
+          "bgColor": "#F9F6C1",
+          "features": [
+            "Breakfast buffet",
+            "Lunch (3-course menu)",
+            "Dinner (4-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "half-board",
+          "name": "Half Board",
+          "subtitle": "Breakfast & dinner",
+          "price": 55,
+          "available": true,
+          "icon": "fa-coffee",
+          "color": "#C0C0C0",
+          "bgColor": "#F0F0F0",
+          "features": [
+            "Breakfast buffet",
+            "Dinner (3-course menu)",
+            "Complimentary tea & coffee"
+          ]
+        },
+        {
+          "id": "breakfast-only",
+          "name": "Breakfast Only",
+          "subtitle": "Start your day right",
+          "price": 25,
+          "available": false,
+          "icon": "fa-bread-slice",
+          "color": "#CD7F32",
+          "bgColor": "#FFE2C4",
+          "features": [
+            "Full breakfast buffet",
+            "Fresh juices & beverages",
+            "Continental & Egyptian options"
+          ]
+        },
+        {
+          "id": "room-only",
+          "name": "Room Only",
+          "subtitle": "Accommodation without meals",
+          "price": 0,
+          "available": true,
+          "icon": "fa-bed",
+          "color": "#6B7280",
+          "bgColor": "#F3F4F6"
+        }
+      ]
     }
   ]
 }

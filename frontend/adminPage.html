@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - Hotel Management</title>
+  <link rel="icon" type="image/png" href="../image/travel-agency.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation -->
+  <nav class="bg-[#003262] shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <img src="../image/travel-agency.png" alt="Hotelia" class="w-10 h-10" />
+          <span class="text-2xl font-bold text-white ml-2">Hotelia Admin</span>
+        </div>
+        <div class="flex items-center space-x-4">
+          <span class="text-white" id="adminName">Admin</span>
+          <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition">
+            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Admin Dashboard -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Dashboard Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Total Hotels</p>
+            <p class="text-3xl font-bold text-[#003262]" id="totalHotels">0</p>
+          </div>
+          <i class="fas fa-hotel text-4xl text-[#0047AB]"></i>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Total Users</p>
+            <p class="text-3xl font-bold text-[#003262]" id="totalUsers">0</p>
+          </div>
+          <i class="fas fa-users text-4xl text-green-600"></i>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Total Bookings</p>
+            <p class="text-3xl font-bold text-[#003262]" id="totalBookings">0</p>
+          </div>
+          <i class="fas fa-calendar-check text-4xl text-orange-600"></i>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-500 text-sm">Active Status</p>
+            <p class="text-lg font-bold text-green-600">Online</p>
+          </div>
+          <i class="fas fa-circle text-4xl text-green-600 animate-pulse"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Hotel Button -->
+    <div class="mb-6">
+      <button onclick="openAddHotelModal()" class="bg-[#0047AB] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#003072] transition">
+        <i class="fas fa-plus mr-2"></i>Add New Hotel
+      </button>
+    </div>
+
+    <!-- Hotels Table -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="p-6 border-b border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900">Manage Hotels</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Image</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Hotel Name</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Location</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rating</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="hotelsTableBody" class="bg-white divide-y divide-gray-200">
+            <!-- Hotels will be loaded here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Hotel Modal -->
+  <div id="hotelModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div class="p-6 border-b border-gray-200">
+        <div class="flex justify-between items-center">
+          <h3 class="text-2xl font-bold text-gray-900" id="modalTitle">Add New Hotel</h3>
+          <button onclick="closeHotelModal()" class="text-gray-400 hover:text-gray-600">
+            <i class="fas fa-times text-2xl"></i>
+          </button>
+        </div>
+      </div>
+      <form id="hotelForm" class="p-6 space-y-6">
+        <input type="hidden" id="hotelId" />
+        
+        <!-- Basic Information -->
+        <div class="border-b pb-4">
+          <h4 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h4>
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Hotel Name *</label>
+              <input type="text" id="hotelName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Location *</label>
+                <input type="text" id="hotelLocation" required placeholder="e.g., Corniche El Nil, Cairo, Egypt" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Short Location *</label>
+                <input type="text" id="hotelShortLocation" required placeholder="e.g., Cairo, Egypt" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Price per Night ($) *</label>
+                <input type="number" id="hotelPrice" required min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Rating *</label>
+                <select id="hotelRating" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                  <option value="5">5 Stars</option>
+                  <option value="4.5">4.5 Stars</option>
+                  <option value="4">4 Stars</option>
+                  <option value="3.5">3.5 Stars</option>
+                  <option value="3">3 Stars</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Reviews Count</label>
+                <input type="number" id="hotelReviews" min="0" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Image URL * (Use full HTTPS URLs like from Unsplash, Pixabay, or imgur)</label>
+              <input type="url" id="hotelImage" required placeholder="https://images.unsplash.com/photo-example.jpg" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <p class="text-xs text-gray-500 mt-1">Example: https://images.unsplash.com/photo-1566073771259-6a8506099945</p>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+              <textarea id="hotelDescription" required rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="border-b pb-4">
+          <h4 class="text-lg font-semibold text-gray-900 mb-4">Amenities</h4>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-swimming-pool" data-name="Swimming Pool" />
+              <span class="text-sm"><i class="fas fa-swimming-pool mr-1"></i> Swimming Pool</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-spa" data-name="Spa & Wellness" />
+              <span class="text-sm"><i class="fas fa-spa mr-1"></i> Spa & Wellness</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-utensils" data-name="Restaurant" />
+              <span class="text-sm"><i class="fas fa-utensils mr-1"></i> Restaurant</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-dumbbell" data-name="Fitness Center" />
+              <span class="text-sm"><i class="fas fa-dumbbell mr-1"></i> Fitness Center</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-wifi" data-name="Free WiFi" />
+              <span class="text-sm"><i class="fas fa-wifi mr-1"></i> Free WiFi</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-parking" data-name="Free Parking" />
+              <span class="text-sm"><i class="fas fa-parking mr-1"></i> Free Parking</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-umbrella-beach" data-name="Private Beach" />
+              <span class="text-sm"><i class="fas fa-umbrella-beach mr-1"></i> Private Beach</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" class="amenity-check w-4 h-4" data-icon="fa-water" data-name="Diving Center" />
+              <span class="text-sm"><i class="fas fa-water mr-1"></i> Diving Center</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Rooms -->
+        <div class="border-b pb-4">
+          <div class="flex justify-between items-center mb-4">
+            <h4 class="text-lg font-semibold text-gray-900">Room Types</h4>
+            <button type="button" onclick="addRoomField()" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+              <i class="fas fa-plus mr-1"></i> Add Room Type
+            </button>
+          </div>
+          <div id="roomsContainer" class="space-y-3">
+            <!-- Room fields will be added here -->
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-3 pt-4">
+          <button type="button" onclick="closeHotelModal()" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition">
+            Cancel
+          </button>
+          <button type="submit" class="px-6 py-2 bg-[#0047AB] text-white rounded-lg hover:bg-[#003072] transition">
+            Save Hotel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="hidden fixed top-20 right-4 bg-white shadow-lg rounded-lg p-4 z-50 border-l-4">
+    <div class="flex items-center">
+      <i id="toastIcon" class="text-2xl mr-3"></i>
+      <span id="toastMessage" class="text-gray-900 font-medium"></span>
+    </div>
+  </div>
+
+  <script src="adminPage.js"></script>
+</body>
+</html>  
+      
