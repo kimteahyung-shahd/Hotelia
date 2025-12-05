@@ -1,162 +1,178 @@
-// Hotel Search Functionality
-// Add this script to your home.html before the closing </body> tag
-
-// Hotel data
-const hotels = [
-  {
-    id: "nile-luxury",
-    name: "Nile Luxury Resort",
-    location: "Cairo, Egypt",
-    price: 1200,
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800",
-    roomTypes: ["Standard Room", "Deluxe Room", "Suite"],
-    maxGuests: 4,
-  },
-  {
-    id: "red-sea",
-    name: "Red Sea Paradise",
-    location: "Hurghada, Red Sea",
-    price: 900,
-    rating: 4,
-    image: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800",
-    roomTypes: ["Standard Room", "Deluxe Room", "Family Room"],
-    maxGuests: 5,
-  },
-  {
-    id: "alexandria-bay",
-    name: "Alexandria Bay Hotel",
-    location: "Alexandria, Mediterranean",
-    price: 750,
-    rating: 4,
-    image: "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800",
-    roomTypes: ["Standard Room", "Suite"],
-    maxGuests: 3,
-  },
-  {
-    id: "aswan-oasis",
-    name: "Aswan Oasis Retreat",
-    location: "Aswan, Upper Egypt",
-    price: 850,
-    rating: 5,
-    image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800",
-    roomTypes: ["Standard Room", "Deluxe Room", "Suite"],
-    maxGuests: 4,
-  },
-  {
-    id: "luxor-valley",
-    name: "Luxor Valley Resort",
-    location: "Luxor, Upper Egypt",
-    price: 1100,
-    rating: 4.5,
-    image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800",
-    roomTypes: ["Standard Room", "Deluxe Room", "Suite", "Family Room"],
-    maxGuests: 6,
-  },
-  {
-    id: "sharm-paradise",
-    name: "Sharm Paradise Beach",
-    location: "Sharm El Sheikh, Sinai",
-    price: 950,
-    rating: 4,
-    image: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800",
-    roomTypes: ["Standard Room", "Deluxe Room", "Suite"],
-    maxGuests: 4,
-  },
-];
+// Hotel Search Functionality with API Integration
+// const API_URL = 'http://localhost:3001';
 
 // Initialize search functionality
 document.addEventListener("DOMContentLoaded", function () {
   const searchForm = document.querySelector("form");
-
+  
   if (searchForm) {
     searchForm.addEventListener("submit", function (e) {
       e.preventDefault();
       performSearch();
     });
   }
+
+  // Set minimum dates to today
+  const dateInputs = document.querySelectorAll('input[type="date"]');
+  const today = new Date().toISOString().split("T")[0];
+  dateInputs.forEach(input => {
+    input.min = today;
+  });
 });
 
-// Perform search
-function performSearch() {
-  // Get search criteria
-  const guests = parseInt(document.querySelector("select").value) || 1;
-  const checkIn = document.querySelectorAll('input[type="date"]')[0].value;
-  const checkOut = document.querySelectorAll('input[type="date"]')[1].value;
-  const roomType = document.querySelectorAll("select")[1].value;
+// Perform search with API integration
+async function performSearch() {
+  try {
+    // Get search criteria
+    const guestsSelect = document.querySelector("select");
+    const guests = guestsSelect ? parseInt(guestsSelect.value) || 1 : 1;
+    
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    const checkIn = dateInputs[0] ? dateInputs[0].value : '';
+    const checkOut = dateInputs[1] ? dateInputs[1].value : '';
+    
+    const selectInputs = document.querySelectorAll("select");
+    const roomTypeSelect = selectInputs[1];
+    const roomType = roomTypeSelect ? roomTypeSelect.value : '';
 
-  // Validate dates
-  if (checkIn && checkOut) {
-    const checkInDate = new Date(checkIn);
-    const checkOutDate = new Date(checkOut);
+    // Validate dates
+    if (checkIn && checkOut) {
+      const checkInDate = new Date(checkIn);
+      const checkOutDate = new Date(checkOut);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
 
-    if (checkOutDate <= checkInDate) {
-      alert("Check-out date must be after check-in date");
+      if (checkInDate < today) {
+        alert("Check-in date cannot be in the past");
+        return;
+      }
+
+      if (checkOutDate <= checkInDate) {
+        alert("Check-out date must be after check-in date");
+        return;
+      }
+
+      // Calculate nights
+      const nights = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+      if (nights > 365) {
+        alert("Maximum stay is 365 nights");
+        return;
+      }
+    } else if (checkIn || checkOut) {
+      alert("Please select both check-in and check-out dates");
       return;
     }
+
+    // Fetch hotels from API
+    const response = await fetch(`${API_URL}/hotels`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch hotels');
+    }
+    
+    const hotels = await response.json();
+    
+    // Filter hotels based on search criteria
+    let filteredHotels = hotels.filter((hotel) => {
+      // Filter by guests capacity
+      let guestsMatch = true;
+      if (guests > 0 && hotel.rooms && hotel.rooms.length > 0) {
+        guestsMatch = hotel.rooms.some(room => room.guests >= guests);
+      }
+
+      // Filter by room type (search in room names)
+      let roomTypeMatch = true;
+      if (roomType && roomType !== '' && roomType !== 'Any' && hotel.rooms && hotel.rooms.length > 0) {
+        roomTypeMatch = hotel.rooms.some(room => 
+          room.name.toLowerCase().includes(roomType.toLowerCase())
+        );
+      }
+
+      return guestsMatch && roomTypeMatch;
+    });
+
+    // Display results
+    displaySearchResults(filteredHotels, { guests, checkIn, checkOut, roomType });
+
+  } catch (error) {
+    console.error('Search error:', error);
+    alert('Failed to search hotels. Please try again.');
   }
-
-  // Filter hotels
-  let filteredHotels = hotels.filter((hotel) => {
-    // Filter by guests
-    const guestsMatch = hotel.maxGuests >= guests;
-
-    // Filter by room type
-    const roomTypeMatch = !roomType || hotel.roomTypes.includes(roomType);
-
-    return guestsMatch && roomTypeMatch;
-  });
-
-  // Display results
-  displaySearchResults(filteredHotels, { guests, checkIn, checkOut, roomType });
 }
 
 // Display search results
 function displaySearchResults(filteredHotels, searchCriteria) {
-  const hotelsGrid = document.querySelector(
-    ".grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3"
-  );
+  const hotelsGrid = document.querySelector(".grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3");
 
-  if (!hotelsGrid) return;
+  if (!hotelsGrid) {
+    console.error('Hotels grid not found');
+    return;
+  }
 
-  // Show search info
+  // Show search info banner
+  const existingSearchInfo = document.getElementById('search-info-banner');
+  if (existingSearchInfo) {
+    existingSearchInfo.remove();
+  }
+
   const searchInfo = document.createElement("div");
-  searchInfo.className =
-    "col-span-full bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4";
+  searchInfo.id = "search-info-banner";
+  searchInfo.className = "col-span-full bg-blue-50 border border-[#0047AB] rounded-lg p-4 mb-4";
+  
+  let searchDetails = [];
+  if (searchCriteria.guests) searchDetails.push(`${searchCriteria.guests} guest(s)`);
+  if (searchCriteria.checkIn && searchCriteria.checkOut) {
+    const nights = calculateNights(searchCriteria.checkIn, searchCriteria.checkOut);
+    searchDetails.push(`${nights} night(s)`);
+  }
+  if (searchCriteria.roomType && searchCriteria.roomType !== 'Any') {
+    searchDetails.push(`Room: ${searchCriteria.roomType}`);
+  }
+
   searchInfo.innerHTML = `
     <div class="flex justify-between items-center">
       <div>
-        <h3 class="font-bold text-gray-900">Search Results</h3>
-        <p class="text-sm text-gray-600">Found ${filteredHotels.length} hotel(s) matching your criteria</p>
+        <h3 class="font-bold text-gray-900 text-lg">
+          <i class="fas fa-search mr-2 text-[#0047AB]"></i>Search Results
+        </h3>
+        <p class="text-sm text-gray-600 mt-1">
+          Found ${filteredHotels.length} hotel(s) matching your criteria
+          ${searchDetails.length > 0 ? `: ${searchDetails.join(' • ')}` : ''}
+        </p>
       </div>
-      <button onclick="clearSearch()" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">
-        <i class="fas fa-times mr-1"></i>Clear Search
+      <button onclick="clearSearch()" class="text-[#0047AB] hover:text-[#0047AB] font-semibold text-sm flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-blue-100 transition">
+        <i class="fas fa-times"></i>
+        Clear Search
       </button>
     </div>
   `;
 
-  // Clear existing results
-  hotelsGrid.innerHTML = "";
-  hotelsGrid.prepend(searchInfo);
+  // Clear existing hotel cards (but keep other elements)
+  const existingCards = hotelsGrid.querySelectorAll('.bg-white.rounded-lg.shadow-lg');
+  existingCards.forEach(card => card.remove());
+
+  // Insert search info at the beginning
+  hotelsGrid.insertBefore(searchInfo, hotelsGrid.firstChild);
 
   // Display filtered hotels
   if (filteredHotels.length === 0) {
-    hotelsGrid.innerHTML += `
-      <div class="col-span-full text-center py-12">
-        <i class="fas fa-search text-gray-300 text-6xl mb-4"></i>
-        <h3 class="text-2xl font-bold text-gray-900 mb-2">No hotels found</h3>
-        <p class="text-gray-600 mb-6">Try adjusting your search criteria</p>
-        <button onclick="clearSearch()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-          View All Hotels
-        </button>
-      </div>
+    const noResults = document.createElement('div');
+    noResults.className = "col-span-full text-center py-16 bg-white rounded-lg shadow-sm";
+    noResults.innerHTML = `
+      <i class="fas fa-search text-gray-300 text-6xl mb-4"></i>
+      <h3 class="text-2xl font-bold text-gray-900 mb-2">No hotels found</h3>
+      <p class="text-gray-600 mb-6">Try adjusting your search criteria</p>
+      <button onclick="clearSearch()" class="bg-[#0047AB] text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-lg">
+        <i class="fas fa-refresh mr-2"></i>View All Hotels
+      </button>
     `;
+    hotelsGrid.appendChild(noResults);
     return;
   }
 
+  // Create and append hotel cards
   filteredHotels.forEach((hotel) => {
     const hotelCard = createHotelCard(hotel, searchCriteria);
-    hotelsGrid.innerHTML += hotelCard;
+    hotelsGrid.insertAdjacentHTML('beforeend', hotelCard);
   });
 
   // Scroll to results
@@ -166,53 +182,84 @@ function displaySearchResults(filteredHotels, searchCriteria) {
 // Create hotel card HTML
 function createHotelCard(hotel, searchCriteria) {
   const stars = generateStars(hotel.rating);
-  const nights = calculateNights(
-    searchCriteria.checkIn,
-    searchCriteria.checkOut
-  );
-  const totalPrice = hotel.price * nights;
+  const nights = calculateNights(searchCriteria.checkIn, searchCriteria.checkOut);
+  
+  // Find the cheapest room that matches guest criteria
+  let displayPrice = hotel.price;
+  let roomInfo = '';
+  
+  if (hotel.rooms && hotel.rooms.length > 0) {
+    const matchingRooms = hotel.rooms.filter(room => 
+      !searchCriteria.guests || room.guests >= searchCriteria.guests
+    );
+    
+    if (matchingRooms.length > 0) {
+      const cheapestRoom = matchingRooms.reduce((min, room) => 
+        room.price < min.price ? room : min
+      );
+      displayPrice = cheapestRoom.price;
+      roomInfo = `<p class="text-xs text-gray-500 mt-1">Starting from ${cheapestRoom.name}</p>`;
+    }
+  }
+  
+  const totalPrice = displayPrice * nights;
 
   return `
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-      <img src="${hotel.image}" alt="${
-    hotel.name
-  }" class="w-full h-56 object-cover" />
-      <div class="p-6">
-        <div class="flex justify-between items-start mb-2">
-          <h3 class="text-xl font-bold text-gray-900">${hotel.name}</h3>
-          <div class="flex items-center">
-            ${stars}
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition transform hover:-translate-y-1">
+      <div class="relative">
+        <img src="${hotel.image}" alt="${hotel.name}" class="w-full h-56 object-cover" />
+        <div class="absolute top-3 right-3 bg-white px-3 py-1 rounded-full shadow-lg">
+          <div class="flex items-center gap-1">
+            <i class="fas fa-star text-yellow-400 text-sm"></i>
+            <span class="font-bold text-gray-900 text-sm">${hotel.rating}</span>
           </div>
         </div>
-        <div class="flex items-center text-gray-600 mb-4">
-          <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
-          <span>${hotel.location}</span>
+        ${hotel.rooms && hotel.rooms.length > 0 ? 
+          `<div class="absolute bottom-3 left-3 bg-[#0047AB] text-white px-3 py-1 rounded-full text-xs font-semibold">
+            ${hotel.rooms.length} Room Type${hotel.rooms.length > 1 ? 's' : ''}
+          </div>` : ''
+        }
+      </div>
+      <div class="p-6">
+        <div class="mb-3">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">${hotel.name}</h3>
+          <div class="flex items-center text-gray-600 text-sm">
+            <i class="fas fa-map-marker-alt mr-2 text-[#0047AB]"></i>
+            <span>${hotel.location}</span>
+          </div>
+          <div class="flex items-center gap-2 mt-2 text-xs text-gray-500">
+            ${stars}
+            <span>(${hotel.reviews || 0} reviews)</span>
+          </div>
         </div>
-        <p class="text-gray-600 mb-4">
-          ${getHotelDescription(hotel.id)}
+        
+        <p class="text-gray-600 text-sm mb-4 line-clamp-2">
+          ${hotel.description || 'Luxury accommodation with excellent amenities.'}
         </p>
-        <div class="flex items-center justify-between mb-4">
-          <div>
-            <span class="text-3xl font-bold text-blue-600">$${
-              hotel.price
-            }</span>
-            <span class="text-sm text-gray-500">/night</span>
-            ${
-              nights > 1
-                ? `<p class="text-sm text-gray-600">$${totalPrice.toLocaleString()} for ${nights} nights</p>`
-                : ""
+        
+        <div class="border-t pt-4 mb-4">
+          <div class="flex items-end justify-between">
+            <div>
+              <span class="text-3xl font-bold text-[#0047AB]">$${displayPrice.toLocaleString()}</span>
+              <span class="text-sm text-gray-500">/night</span>
+              ${roomInfo}
+            </div>
+            ${nights > 1 ? 
+              `<div class="text-right">
+                <p class="text-xs text-gray-500">Total for ${nights} nights</p>
+                <p class="text-lg font-bold text-gray-900">$${totalPrice.toLocaleString()}</p>
+              </div>` : ''
             }
           </div>
         </div>
-        <div class="flex space-x-2">
-          <a href="${getHotelDetailsLink(hotel.id)}" 
-             class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition text-center">
-            See Details
+        
+        <div class="flex gap-2">
+          <a href="hotelDetails.html?hotel=${hotel.id}" 
+             class="flex-1 bg-[#0047AB] text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition text-center text-sm">
+            <i class="fas fa-info-circle mr-2"></i>View Details
           </a>
-          <button onclick="addToCart('${hotel.id}', '${hotel.name}', '${
-    hotel.location
-  }', ${hotel.price}, '${hotel.image}', ${hotel.rating})"
-                  class="bg-orange-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-orange-600 transition">
+          <button onclick="quickAddToCart('${hotel.id}')"
+                  class="bg-[#0047AB] text-white py-3 px-4 rounded-lg font-semibold hover:bg-orange-600 transition">
             <i class="fas fa-cart-plus"></i>
           </button>
         </div>
@@ -228,13 +275,13 @@ function generateStars(rating) {
   let stars = "";
 
   for (let i = 0; i < fullStars; i++) {
-    stars += '<i class="fas fa-star text-yellow-400"></i>';
+    stars += '<i class="fas fa-star text-yellow-400 text-xs"></i>';
   }
   if (hasHalf) {
-    stars += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
+    stars += '<i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>';
   }
   for (let i = Math.ceil(rating); i < 5; i++) {
-    stars += '<i class="far fa-star text-yellow-400"></i>';
+    stars += '<i class="far fa-star text-yellow-400 text-xs"></i>';
   }
 
   return stars;
@@ -249,49 +296,188 @@ function calculateNights(checkIn, checkOut) {
   return nights > 0 ? nights : 1;
 }
 
-// Get hotel description
-function getHotelDescription(hotelId) {
-  const descriptions = {
-    "nile-luxury":
-      "Experience luxury on the banks of the Nile with stunning views of the pyramids.",
-    "red-sea":
-      "Beachfront resort with world-class diving and crystal clear waters.",
-    "alexandria-bay":
-      "Modern hotel overlooking the Mediterranean with rich historical surroundings.",
-    "aswan-oasis":
-      "Boutique hotel near ancient temples with Nile views and traditional hospitality.",
-    "luxor-valley":
-      "Elegant resort steps away from the Valley of Kings and ancient wonders.",
-    "sharm-paradise":
-      "All-inclusive beach resort with spectacular coral reefs and desert adventures.",
-  };
-  return (
-    descriptions[hotelId] || "Luxury accommodation with excellent amenities."
-  );
-}
-
-// Get hotel details link
-function getHotelDetailsLink(hotelId) {
-  return `hotelDetails.html?hotel=${hotelId}`;
-}
-
 // Clear search and show all hotels
 function clearSearch() {
+  // Clear form inputs
+  const form = document.querySelector("form");
+  if (form) {
+    form.reset();
+  }
+  
+  // Remove search banner
+  const searchBanner = document.getElementById('search-info-banner');
+  if (searchBanner) {
+    searchBanner.remove();
+  }
+  
+  // Reload page to show all hotels
   location.reload();
 }
 
+// Quick add to cart function
+async function quickAddToCart(hotelId) {
+  try {
+    const response = await fetch(`${API_URL}/hotels/${hotelId}`);
+    if (!response.ok) {
+      throw new Error('Failed to fetch hotel details');
+    }
+    
+    const hotel = await response.json();
+    
+    // Get search criteria if available
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    const checkIn = dateInputs[0]?.value || '';
+    const checkOut = dateInputs[1]?.value || '';
+    const guestsSelect = document.querySelector("select");
+    const guests = guestsSelect ? parseInt(guestsSelect.value) || 2 : 2;
+    
+    if (!checkIn || !checkOut) {
+      alert('Please select check-in and check-out dates first');
+      return;
+    }
+    
+    // Get the first available room or use hotel price
+    let roomType = 'Standard Room';
+    let roomPrice = hotel.price;
+    
+    if (hotel.rooms && hotel.rooms.length > 0) {
+      roomType = hotel.rooms[0].name;
+      roomPrice = hotel.rooms[0].price;
+    }
+    
+    // Add to cart
+    if (typeof cart !== 'undefined' && cart.addItem) {
+      cart.addItem({
+        id: hotel.id,
+        name: hotel.name,
+        location: hotel.shortLocation || hotel.location,
+        price: roomPrice,
+        image: hotel.image,
+        rating: hotel.rating,
+        checkIn: checkIn,
+        checkOut: checkOut,
+        guests: guests,
+        roomType: roomType,
+        mealOption: "Room Only",
+        mealPrice: 0
+      });
+    } else {
+      alert('Cart system not available. Please try from the details page.');
+    }
+  } catch (error) {
+    console.error('Error adding to cart:', error);
+    alert('Failed to add hotel to cart. Please try again.');
+  }
+}
+
 // Search by location (helper function)
-function searchByLocation(location) {
-  const filteredHotels = hotels.filter((hotel) =>
-    hotel.location.toLowerCase().includes(location.toLowerCase())
-  );
-  displaySearchResults(filteredHotels, {});
+async function searchByLocation(location) {
+  try {
+    const response = await fetch(`${API_URL}/hotels`);
+    const hotels = await response.json();
+    
+    const filteredHotels = hotels.filter((hotel) =>
+      hotel.location.toLowerCase().includes(location.toLowerCase()) ||
+      hotel.shortLocation?.toLowerCase().includes(location.toLowerCase())
+    );
+    
+    displaySearchResults(filteredHotels, { location });
+  } catch (error) {
+    console.error('Location search error:', error);
+  }
 }
 
 // Search by price range (helper function)
-function searchByPriceRange(minPrice, maxPrice) {
-  const filteredHotels = hotels.filter(
-    (hotel) => hotel.price >= minPrice && hotel.price <= maxPrice
-  );
-  displaySearchResults(filteredHotels, {});
+async function searchByPriceRange(minPrice, maxPrice) {
+  try {
+    const response = await fetch(`${API_URL}/hotels`);
+    const hotels = await response.json();
+    
+    const filteredHotels = hotels.filter((hotel) => {
+      let hotelPrice = hotel.price;
+      
+      // Check room prices if available
+      if (hotel.rooms && hotel.rooms.length > 0) {
+        const prices = hotel.rooms.map(room => room.price);
+        hotelPrice = Math.min(...prices);
+      }
+      
+      return hotelPrice >= minPrice && hotelPrice <= maxPrice;
+    });
+    
+    displaySearchResults(filteredHotels, { minPrice, maxPrice });
+  } catch (error) {
+    console.error('Price range search error:', error);
+  }
+}
+
+// Search by rating (helper function)
+async function searchByRating(minRating) {
+  try {
+    const response = await fetch(`${API_URL}/hotels`);
+    const hotels = await response.json();
+    
+    const filteredHotels = hotels.filter((hotel) => hotel.rating >= minRating);
+    
+    displaySearchResults(filteredHotels, { minRating });
+  } catch (error) {
+    console.error('Rating search error:', error);
+  }
+}
+
+// Advanced search with multiple filters
+async function advancedSearch(filters) {
+  try {
+    const response = await fetch(`${API_URL}/hotels`);
+    const hotels = await response.json();
+    
+    const filteredHotels = hotels.filter((hotel) => {
+      let match = true;
+      
+      // Filter by location
+      if (filters.location) {
+        match = match && (
+          hotel.location.toLowerCase().includes(filters.location.toLowerCase()) ||
+          hotel.shortLocation?.toLowerCase().includes(filters.location.toLowerCase())
+        );
+      }
+      
+      // Filter by price range
+      if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
+        let hotelPrice = hotel.price;
+        if (hotel.rooms && hotel.rooms.length > 0) {
+          hotelPrice = Math.min(...hotel.rooms.map(room => room.price));
+        }
+        if (filters.minPrice !== undefined) {
+          match = match && hotelPrice >= filters.minPrice;
+        }
+        if (filters.maxPrice !== undefined) {
+          match = match && hotelPrice <= filters.maxPrice;
+        }
+      }
+      
+      // Filter by rating
+      if (filters.minRating !== undefined) {
+        match = match && hotel.rating >= filters.minRating;
+      }
+      
+      // Filter by amenities
+      if (filters.amenities && filters.amenities.length > 0) {
+        if (hotel.amenities && hotel.amenities.length > 0) {
+          const hotelAmenityNames = hotel.amenities.map(a => a.name.toLowerCase());
+          match = match && filters.amenities.every(amenity => 
+            hotelAmenityNames.some(name => name.includes(amenity.toLowerCase()))
+          );
+        } else {
+          match = false;
+        }
+      }
+      
+      return match;
+    });
+    
+    displaySearchResults(filteredHotels, filters);
+  } catch (error) {
+    console.error('Advanced search error:', error);
+  }
 }
