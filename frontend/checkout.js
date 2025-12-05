@@ -17,37 +17,166 @@ function loadCheckoutSummary() {
     return;
   }
 
-  // Display cart items
-  summaryContainer.innerHTML = cart.items
-    .map((item) => {
-      const nights = cart.calculateNights(item.checkIn, item.checkOut);
-      const itemTotal = item.price * nights;
+  const hotelItem = cart.items.find((item) => item.type === "hotel");
 
-      return `
-      <div class="border-b pb-4">
-        <div class="flex gap-3">
-          <img src="${item.image}" alt="${
-        item.name
-      }" class="w-20 h-16 object-cover rounded">
-          <div class="flex-1">
-            <h4 class="font-semibold text-gray-900 text-sm">${item.name}</h4>
-            <p class="text-xs text-gray-600">${item.location}</p>
-            <p class="text-xs text-gray-600">${nights} night${
-        nights > 1 ? "s" : ""
-      }</p>
-            <p class="text-sm font-semibold text-blue-600 mt-1">$${itemTotal.toLocaleString()}</p>
-          </div>
-        </div>
-      </div>
-    `;
-    })
-    .join("");
+  const nights = cart.calculateNights(hotelItem.checkIn, hotelItem.checkOut);
+  const roomTotal = hotelItem.price * nights;
+
+  const generateStars = (rating) => {
+    let stars = "";
+    for (let i = 0; i < 5; i++) {
+      if (i < rating) {
+        stars += '<i class="fas fa-star text-yellow-400 text-sm"></i>';
+      } else {
+        stars += '<i class="far fa-star text-yellow-400 text-sm"></i>';
+      }
+    }
+    return stars;
+  };
+
+  // Format date
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   // Calculate totals
   const subtotal = cart.getTotal();
   const serviceFee = cart.items.length * 50;
   const tax = Math.round((subtotal + serviceFee) * 0.14);
   const total = subtotal + serviceFee + tax;
+
+  summaryContainer.innerHTML = `<div class="mb-6">
+      <img
+        src="${hotelItem.image}"
+        alt="${hotelItem.name}"
+        class="w-full h-40 object-cover rounded-lg mb-4"
+      />
+      <h4 class="text-lg font-bold text-gray-900">
+        ${hotelItem.name}
+      </h4>
+      <div class="flex items-center mt-1">
+        ${generateStars(hotelItem.rating || 5)}
+        <span class="ml-2 text-sm text-gray-600">${
+          hotelItem.rating || 5
+        }.0</span>
+      </div>
+      <p class="text-sm text-gray-600 mt-1">
+        <i class="fas fa-map-marker-alt text-[#0047AB] mr-1"></i>
+        ${hotelItem.location}
+      </p>
+    </div>
+
+    <!-- Booking Details -->
+    <div class="space-y-3 mb-6 pb-6 border-b">
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-calendar-check text-[#0047AB] mr-2"></i>Check-in
+        </span>
+        <span class="font-semibold text-gray-900">${formatDate(
+          hotelItem.checkIn
+        )}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-calendar-times text-[#0047AB] mr-2"></i>Check-out
+        </span>
+        <span class="font-semibold text-gray-900">${formatDate(
+          hotelItem.checkOut
+        )}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-moon text-[#0047AB] mr-2"></i>Duration
+        </span>
+        <span class="font-semibold text-gray-900">${nights} Night${
+    nights > 1 ? "s" : ""
+  }</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-users text-[#0047AB] mr-2"></i>Guests
+        </span>
+        <span class="font-semibold text-gray-900">${
+          hotelItem.guests || 2
+        } Guest${hotelItem.guests > 1 ? "s" : ""}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-bed text-[#0047AB] mr-2"></i>Room Type
+        </span>
+        <span class="font-semibold text-gray-900">${
+          hotelItem.roomType || "Standard Room"
+        }</span>
+      </div>
+      ${
+        hotelItem.mealOption && hotelItem.mealOption !== "Room Only"
+          ? `
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600 text-sm">
+          <i class="fas fa-utensils text-[#0047AB] mr-2"></i>Meal Plan
+        </span>
+        <span class="font-semibold text-gray-900">${hotelItem.mealOption}</span>
+      </div>
+      `
+          : ""
+      }
+    </div>
+
+    <!-- Price Breakdown -->
+    <div class="space-y-3 mb-6 pb-6 border-b">
+      <h4 class="font-bold text-gray-900 mb-3">Price Details</h4>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Room (${nights} night${
+    nights > 1 ? "s" : ""
+  })</span>
+        <span class="text-gray-900 font-semibold">$${roomTotal.toLocaleString()}</span>
+      </div>
+      ${
+        hotelItem.mealOption && hotelItem.mealOption !== "Room Only"
+          ? `
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">${hotelItem.mealOption}</span>
+        <span class="text-gray-900 font-semibold">$${(
+          (hotelItem.mealPrice || 0) * nights
+        ).toLocaleString()}</span>
+      </div>
+      `
+          : ""
+      }
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Service Fee</span>
+        <span class="text-gray-900 font-semibold">$${serviceFee}</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-600">Taxes (14%)</span>
+        <span class="text-gray-900 font-semibold">$${tax.toLocaleString()}</span>
+      </div>
+    </div>
+
+    <!-- Total -->
+    <div class="flex justify-between items-center mb-6">
+      <span class="text-xl font-bold text-gray-900">Total</span>
+      <span class="text-3xl font-bold text-[#003072]">$${total.toLocaleString()}</span>
+    </div>
+
+    <!-- Info Box -->
+    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+      <div class="flex items-start">
+        <i class="fas fa-check-circle text-green-600 mt-1 mr-3"></i>
+        <div class="text-sm text-green-800">
+          <p class="font-semibold">Free Cancellation</p>
+          <p class="mt-1">
+            Cancel up to 48 hours before check-in for a full refund
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
 
   document.getElementById(
     "subtotalAmount"

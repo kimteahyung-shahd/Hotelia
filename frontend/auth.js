@@ -12,9 +12,17 @@ function registerUser(newUser) {
     },
     body: JSON.stringify(newUser)
   })
+
+    .then((res) => res.json())
+    .then((data) => {
+
+      console.log("User registered:", data);
+      window.location.href = "./frontend/login.html";
+    })
     
     .then(res => res.json())
     .then(data => {
+
       setTimeout(() => {
         showToast("Registered Successfully!", "success");
         window.location.href = "login.html";
@@ -22,6 +30,15 @@ function registerUser(newUser) {
     })
     .catch(err => console.log(err));
 }
+
+function loginUser(email, password ,code = null) {
+  fetch(`http://localhost:3001/users?email=${email}`)
+    .then((res) => res.json())
+    .then((users) => {
+      if (users.length === 0) {
+        showToast("Email not found!", "error");
+        return;
+      }})
 
 
 async function loginUser(email, password, code = "") {
@@ -67,6 +84,43 @@ async function loginUser(email, password, code = "") {
   }
 }
 
+async function adminLogin(email, password, code) {
+  fetch(`http://localhost:3001/users?email=${email}`)
+    .then((res) => res.json())
+    .then((users) => {
+      if (users.length === 0) {
+        showToast("Email not found!", "error");
+        return;
+      }
+
+
+      const user = users[0];
+
+    // check admin users
+    const adminRes = await fetch(
+      `http://localhost:3001/adminUsers?email=${email}`
+    );
+    const admins = await adminRes.json();
+
+
+      if (user.password === password && user.adminAccessCode === code) {
+        
+        // login success
+        showToast("Login Successful!", "success");
+        localStorage.setItem("user", JSON.stringify(user));
+
+        setTimeout(() => {
+          window.location.href = "home.html";
+        }, 1200);
+      } else {
+        showToast("Wrong password!", "error");
+      }
+    })
+    .catch((err) => console.log(err));
+    }
+
+    showToast("Incorrect Email / Password / Code!", "error");
+  }
 
 function showToast(message, type = "success") {
   const toast = document.getElementById("toast-default");

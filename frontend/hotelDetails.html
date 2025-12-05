@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hotel Details - Hotelia</title>
-  <link rel="icon" type="image/png" href="../image/travel-agency.png" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-</head>
-<body class="bg-gray-50">
-  <!-- Navigation -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hotel Details - Hotelia</title>
+    <link rel="icon" type="image/png" href="../image/travel-agency.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
 
-      <nav class="bg-white shadow-sm sticky top-0 z-50">
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex items-center">
@@ -42,16 +45,550 @@
       </div>
     </nav>
 
-  <!-- Hotel Details Container -->
-  <div id="hotelContainer" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <!-- Loading state -->
-    <div class="text-center py-12">
-      <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
-      <p class="mt-4 text-gray-600">Loading hotel details...</p>
+    <!-- Hotel Details Container -->
+    <div
+      id="hotelContainer"
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+    >
+      <!-- Loading state -->
+      <div class="text-center py-12">
+        <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
+        <p class="mt-4 text-gray-600">Loading hotel details...</p>
+      </div>
     </div>
-  </div>
 
-  <script src="cart.js"></script>
-  <script src="hotelDetails.js"></script>
-</body>
+    <!-- Hotel Details Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column - Hotel Info -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Hotel Header -->
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img
+              id="hotelMainImage"
+              src=""
+              alt=""
+              class="w-full h-96 object-cover"
+            />
+            <div class="p-6">
+              <div class="flex justify-between items-start mb-4">
+                <div>
+                  <h1
+                    id="hotelName"
+                    class="text-3xl font-bold text-gray-900 mb-2"
+                  ></h1>
+                  <div id="hotelStars" class="flex items-center mb-2"></div>
+                  <div class="flex items-center text-gray-600">
+                    <i class="fas fa-map-marker-alt mr-2 text-[#0047AB]"></i>
+                    <span id="hotelLocation"></span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span
+                    id="hotelPrice"
+                    class="text-4xl font-bold text-[#003262]"
+                  ></span>
+                  <p class="text-gray-600">per night</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-4">
+              About This Hotel
+            </h2>
+            <p id="hotelDescription" class="text-gray-600 leading-relaxed"></p>
+          </div>
+
+          <!-- Amenities -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Amenities</h2>
+            <div
+              id="hotelAmenities"
+              class="grid grid-cols-2 md:grid-cols-3 gap-4"
+            ></div>
+          </div>
+
+          <!-- Available Rooms -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+              Available Rooms
+            </h2>
+            <div id="availableRooms" class="space-y-6"></div>
+          </div>
+
+          <!-- Meal Options Section -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Meal Options</h2>
+            <p class="text-gray-600 mb-6">
+              Enhance your stay with our delicious dining packages
+            </p>
+
+            <div class="space-y-4">
+              <!-- Full Board (Gold) -->
+              <div
+                class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition hover:border-[#E4D00A]"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <div class="flex-1">
+                    <div class="flex items-center mb-2">
+                      <div
+                        class="bg-[#F9F6C1] w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                      >
+                        <i class="fas fa-utensils text-[#E4D00A] text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-gray-900">
+                          Full Board
+                        </h3>
+                        <p class="text-sm text-gray-500">All meals included</p>
+                      </div>
+                    </div>
+                    <ul class="space-y-2 ml-16">
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#E4D00A] mr-2"></i>
+                        Breakfast buffet
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#E4D00A] mr-2"></i>
+                        Lunch (3-course menu)
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#E4D00A] mr-2"></i>
+                        Dinner (4-course menu)
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#E4D00A] mr-2"></i>
+                        Complimentary tea & coffee
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="text-right ml-4">
+                    <p class="text-2xl font-bold text-[#E4D00A]">+$85</p>
+                    <p class="text-xs text-gray-500">per person/day</p>
+                    <button
+                      data-meal="full-board"
+                      class="mt-3 bg-[#E4D00A] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#C9B609] transition"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Half Board (Silver) -->
+              <div
+                class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition hover:border-[#C0C0C0]"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <div class="flex-1">
+                    <div class="flex items-center mb-2">
+                      <div
+                        class="bg-[#F0F0F0] w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                      >
+                        <i class="fas fa-coffee text-[#C0C0C0] text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-gray-900">
+                          Half Board
+                        </h3>
+                        <p class="text-sm text-gray-500">Breakfast & dinner</p>
+                      </div>
+                    </div>
+                    <ul class="space-y-2 ml-16">
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#C0C0C0] mr-2"></i>
+                        Breakfast buffet
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#C0C0C0] mr-2"></i>
+                        Dinner (3-course menu)
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#C0C0C0] mr-2"></i>
+                        Complimentary tea & coffee
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="text-right ml-4">
+                    <p class="text-2xl font-bold text-[#C0C0C0]">+$55</p>
+                    <p class="text-xs text-gray-500">per person/day</p>
+                    <button
+                      data-meal="half-board"
+                      class="mt-3 bg-[#C0C0C0] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#A8A8A8] transition"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Breakfast Only (Bronze) -->
+              <div
+                class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition hover:border-[#CD7F32]"
+              >
+                <div class="flex justify-between items-start mb-3">
+                  <div class="flex-1">
+                    <div class="flex items-center mb-2">
+                      <div
+                        class="bg-[#FFE2C4] w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                      >
+                        <i
+                          class="fas fa-bread-slice text-[#CD7F32] text-xl"
+                        ></i>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-gray-900">
+                          Breakfast Only
+                        </h3>
+                        <p class="text-sm text-gray-500">
+                          Start your day right
+                        </p>
+                      </div>
+                    </div>
+                    <ul class="space-y-2 ml-16">
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#CD7F32] mr-2"></i>
+                        Full breakfast buffet
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#CD7F32] mr-2"></i>
+                        Fresh juices & beverages
+                      </li>
+                      <li class="flex items-center text-sm text-gray-600">
+                        <i class="fas fa-check-circle text-[#CD7F32] mr-2"></i>
+                        Continental & Egyptian options
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="text-right ml-4">
+                    <p class="text-2xl font-bold text-[#CD7F32]">+$25</p>
+                    <p class="text-xs text-gray-500">per person/day</p>
+                    <button
+                      data-meal="breakfast-only"
+                      class="mt-3 bg-[#CD7F32] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#B56F28] transition"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Room Only -->
+              <div
+                class="border border-gray-200 rounded-lg p-5 hover:shadow-md transition"
+              >
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <div class="flex items-center">
+                      <div
+                        class="bg-gray-100 w-12 h-12 rounded-lg flex items-center justify-center mr-4"
+                      >
+                        <i class="fas fa-bed text-gray-600 text-xl"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-bold text-gray-900">
+                          Room Only
+                        </h3>
+                        <p class="text-sm text-gray-500">
+                          Accommodation without meals
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-right ml-4">
+                    <p class="text-2xl font-bold text-gray-600">$0</p>
+                    <p class="text-xs text-gray-500">Standard rate</p>
+                    <button
+                      data-meal="room-only"
+                      class="mt-3 bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition"
+                    >
+                      Select
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div class="flex items-start">
+                <i class="fas fa-info-circle text-[#0047AB] mt-1 mr-3"></i>
+                <div class="text-sm text-[#003262]">
+                  <p class="font-semibold">Dining Information</p>
+                  <p class="mt-1">
+                    All meal packages can be customized for dietary
+                    requirements. Please inform us of any allergies or special
+                    needs when booking.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column - Booking Form -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-lg shadow-lg p-6 sticky top-24">
+            <h3 class="text-2xl font-bold text-gray-900 mb-6">
+              Book Your Stay
+            </h3>
+
+            <div id="date-alert-container" class="mb-4"></div>
+            <form class="space-y-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Check-in Date</label
+                >
+                <input
+                  type="date"
+                  id="checkInDate"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Check-out Date</label
+                >
+                <input
+                  type="date"
+                  id="checkOutDate"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Number of Guests</label
+                >
+                <select
+                  id="numGuests"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option>1 Guest</option>
+                  <option>2 Guests</option>
+                  <option>3 Guests</option>
+                  <option>4 Guests</option>
+                  <option>5+ Guests</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2"
+                  >Room Type</label
+                >
+                <select
+                  id="roomTypeSelect"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                ></select>
+              </div>
+
+              <div class="border-t pt-4 mt-4">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-gray-600" id="nightsLabel">1 night</span>
+                  <span class="text-gray-900 font-semibold" id="nightsPrice"
+                    >$0</span
+                  >
+                </div>
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-gray-600">Service fee</span>
+                  <span class="text-gray-900 font-semibold">$50</span>
+                </div>
+                <div
+                  class="flex justify-between items-center mb-4 pt-2 border-t"
+                >
+                  <span class="text-lg font-bold text-gray-900">Total</span>
+                  <span
+                    class="text-2xl font-bold text-[#0047AB]"
+                    id="totalPrice"
+                    >$0</span
+                  >
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onclick="addCurrentHotelToCart()"
+                class="w-full bg-[#0047AB] text-white py-3 rounded-lg font-semibold hover:bg-[#003262] transition"
+              >
+                <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+              </button>
+
+              <p class="text-xs text-gray-500 text-center mt-4">
+                <i class="fas fa-shield-alt mr-1"></i>
+                Secure booking - You won't be charged yet
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <div>
+            <div class="flex items-center mb-4">
+              <i class="fas fa-hotel text-blue-400 text-2xl mr-2"></i>
+              <span class="text-2xl font-bold">Hotelia</span>
+            </div>
+            <p class="text-gray-400">
+              Your gateway to Egypt's finest accommodations
+            </p>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white">About Us</a></li>
+              <li><a href="#" class="hover:text-white">Hotels</a></li>
+              <li><a href="#" class="hover:text-white">Destinations</a></li>
+              <li><a href="#" class="hover:text-white">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Support</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li><a href="#" class="hover:text-white">Help Center</a></li>
+              <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+              <li><a href="#" class="hover:text-white">Privacy Policy</a></li>
+              <li><a href="#" class="hover:text-white">FAQs</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-bold mb-4">Connect</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white text-xl"
+                ><i class="fab fa-facebook"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white text-xl"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white text-xl"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-gray-400 hover:text-white text-xl"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+          <p>&copy; 2024 Hotelia. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the date input elements
+        const checkInInput = document.querySelectorAll('input[type="date"]')[0];
+        const checkOutInput =
+          document.querySelectorAll('input[type="date"]')[1];
+
+        // Set minimum date to today for both inputs
+        const today = new Date().toISOString().split("T")[0];
+        checkInInput.min = today;
+        checkOutInput.min = today;
+
+        // Function to show custom alert
+        function showDateAlert(message) {
+          // Remove any existing alerts
+          const existingAlert = document.getElementById("dateAlert");
+          if (existingAlert) {
+            existingAlert.remove();
+          }
+
+          // Create alert element
+          const alertDiv = document.createElement("div");
+          alertDiv.id = "dateAlert";
+          alertDiv.className =
+            "p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 border border-red-200 fixed top-20 left-1/2 transform -translate-x-1/2 z-50 shadow-lg animate-slide-down";
+          alertDiv.setAttribute("role", "alert");
+          alertDiv.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <i class="fas fa-exclamation-circle mr-2 text-red-600"></i>
+          <span class="font-medium">Date Error!</span> ${message}
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-red-800 hover:text-red-900">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    `;
+
+          // Insert at the top of the body
+          document.body.insertBefore(alertDiv, document.body.firstChild);
+
+          // Auto-remove after 5 seconds
+          setTimeout(() => {
+            if (alertDiv.parentElement) {
+              alertDiv.style.opacity = "0";
+              alertDiv.style.transition = "opacity 0.3s";
+              setTimeout(() => alertDiv.remove(), 300);
+            }
+          }, 5000);
+        }
+
+        // When check-in date changes, update check-out minimum date
+        checkInInput.addEventListener("change", function () {
+          const checkInDate = this.value;
+
+          if (checkInDate) {
+            // Set checkout minimum to the day after check-in
+            const checkInDateObj = new Date(checkInDate);
+            checkInDateObj.setDate(checkInDateObj.getDate() + 1);
+            const minCheckOut = checkInDateObj.toISOString().split("T")[0];
+
+            checkOutInput.min = minCheckOut;
+
+            // If checkout is before or same as check-in, reset it
+            if (checkOutInput.value && checkOutInput.value <= checkInDate) {
+              checkOutInput.value = "";
+              showDateAlert(
+                "Check-out date must be after check-in date. Please select a valid date."
+              );
+            }
+          }
+        });
+
+        // When check-out date changes, validate it's after check-in
+        checkOutInput.addEventListener("change", function () {
+          const checkInDate = checkInInput.value;
+          const checkOutDate = this.value;
+
+          if (checkInDate && checkOutDate) {
+            if (checkOutDate <= checkInDate) {
+              this.value = "";
+              showDateAlert(
+                "Check-out date must be after check-in date. Please select a valid date."
+              );
+            }
+          }
+        });
+
+        // Form submission validation
+        const searchForm = document.querySelector("form");
+        if (searchForm) {
+          searchForm.addEventListener("submit", function (e) {
+            const checkInDate = checkInInput.value;
+            const checkOutDate = checkOutInput.value;
+
+            if (checkInDate && checkOutDate) {
+              if (checkOutDate <= checkInDate) {
+                e.preventDefault();
+                showDateAlert(
+                  "Check-out date must be after check-in date. Please correct the dates and try again."
+                );
+                return false;
+              }
+            }
+          });
+        }
+      });
+    </script>
+    <script src="cart.js"></script>
+    <script src="hotelDetails.js"></script>
+  </body>
 </html>

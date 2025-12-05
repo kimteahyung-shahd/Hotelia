@@ -30,6 +30,90 @@ function loadConfirmationDetails() {
 
   // Display price summary
   displayPriceSummary(cartItems, bookingData);
+
+  // Save booking to "database" (backend)
+  saveBookingToDatabase(bookingData, cartItems);
+}
+
+async function saveBookingToDatabase(bookingData, cartItems) {
+  try {
+    const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+    //save booking data to show in the history page
+    const hotels = cartItems.filter((item) => item.type === "hotel");
+    const meals = cartItems.filter((item) => item.type === "meal");
+
+    if (hotels.length === 0) {
+      return;
+    }
+
+    const firstHotel = hotels[0]; // Assuming at least one hotel exists
+    const nights = calculateNights(firstHotel.checkIn, firstHotel.checkOut);
+
+    let subtotal = 0;
+    hotels.forEach((hotel) => {
+      const night = calculateNights(hotel.checkIn, hotel.checkOut);
+      subtotal += hotel.price * night;
+    });
+    meals.forEach((meal) => {
+      subtotal += meal.price * (meal.quantity || 1);
+    });
+
+    const serviceFee = hotels.length * 50;
+    const tax = Math.round((subtotal + serviceFee) * 0.14);
+    const total = subtotal + serviceFee + tax;
+
+    const booking = {
+      id: generateBookingId(),
+      userId: currentUser.id,
+      email: currentUser.email,
+      confirmationNumber: bookingData.confirmationNumber,
+      hotelName: firstHotel.name,
+      hotelId: firstHotel.id,
+      location: firstHotel.location,
+      shortLocation: firstHotel.shortLocation,
+      image: firstHotel.image,
+      checkIn: firstHotel.checkIn,
+      checkOut: firstHotel.checkOut,
+      guests: firstHotel.guests || 1,
+      roomType: firstHotel.roomType,
+      mealOption: firstHotel.mealOption || "Room Only",
+      firstName: bookingData.firstName,
+      lastName: bookingData.lastName,
+      phone: bookingData.phone,
+      paymentMethod: bookingData.paymentMethod,
+      subtotal: subtotal,
+      serviceFee: serviceFee,
+      tax: tax,
+      totalAmount: total,
+      status: "confirmed",
+      bookingDate: bookingData.bookingDate || new Date().toISOString(),
+      cancellationDate: null,
+      cancellationReason: null,
+    };
+
+    console.log("booking to database", booking);
+
+    const response = await fetch("http://localhost:3001/bookings", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    });
+
+    if (response.ok) {
+      console.log("Booking saved successfully to database");
+    } else {
+      console.error("Failed to save booking to database");
+    }
+  } catch (error) {
+    console.error("Error saving booking:", error);
+  }
+}
+
+function generateBookingId() {
+  return Math.random().toString(36).substr(2, 9);
 }
 
 function displayHotelInfo(cartItems) {
@@ -321,7 +405,7 @@ function closeCancellationModal() {
   document.getElementById("cancellationReason").value = "";
 }
 
-function confirmCancellation() {
+async function confirmCancellation() {
   const bookingData = JSON.parse(sessionStorage.getItem("bookingData") || "{}");
   const cancellationReason =
     document.getElementById("cancellationReason").value;
@@ -334,14 +418,58 @@ function confirmCancellation() {
     Math.random().toString(36).substr(2, 9).toUpperCase();
 
   // Store cancellation data
+
+  try {
+    const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+    const response = await fetch(
+      `http://localhost:3001/bookings?confirmationNumber=${bookingData.confirmationNumber}&userId=${currentUser.id}`
+    );
+
+    if (!response.ok) {
+      showToast("Failed to fetch booking for cancellation.", "error");
+      return;
+    }
+    const bookings = await response.json();
+
+    if (bookings.length === 0) {
+      showToast("Booking not found for cancellation.", "error");
+      return;
+    }
+
+    const booking = bookings[0];
+    const updatedBooking = {
+      ...booking,
+      status: "cancelled",
+      cancellationDate: new Date().toISOString(),
+      cancellationReason:
+        cancellationReason || "cancellation reason not provided",
+      cancellationReference: cancellationRef,
+    };
+    const updatedResponse = await fetch(
+      `http://localhost:3001/bookings/${booking.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedBooking),
+      }
+    );
+
+    const updated = await updatedResponse.json();
+    console.log("Booking cancelled:", updated);
+  } catch (error) {}
+
+  showCancellationSuccess(cancellationRef);
+
+  
   const cancellationData = {
-    cancellationReference: cancellationRef,
-    originalConfirmation: bookingData.confirmationNumber,
-    cancellationDate: new Date().toISOString(),
-    reason: cancellationReason,
-    customerEmail: bookingData.email,
-    customerName: `${bookingData.firstName} ${bookingData.lastName}`,
-  };
+  confirmationNumber: bookingData.confirmationNumber,
+  cancellationReference: cancellationRef,
+  reason: cancellationReason || "cancellation reason not provided",
+  date: new Date().toISOString(),
+};
 
   // In a real application, you would send this to your backend
   console.log("Cancellation Data:", cancellationData);
@@ -353,6 +481,22 @@ function confirmCancellation() {
   cancellations.push(cancellationData);
   localStorage.setItem("cancellations", JSON.stringify(cancellations));
 
+  // Update UI with cancellation reference
+  document.getElementById("cancellationReference").textContent =
+    cancellationRef;
+
+  // Hide cancellation modal, show success modal
+  closeCancellationModal();
+  const successModal = document.getElementById("cancellationSuccessModal");
+  successModal.style.display = "flex";
+  successModal.classList.remove("hidden");
+
+  // Clear booking data after cancellation
+  sessionStorage.removeItem("bookingData");
+  sessionStorage.removeItem("confirmedCart");
+}
+
+function showCancellationSuccess(cancellationRef) {
   // Update UI with cancellation reference
   document.getElementById("cancellationReference").textContent =
     cancellationRef;

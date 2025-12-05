@@ -15,12 +15,12 @@ const cart = {
       // Normalize loaded items to ensure numeric fields are numbers
       this.items = this.items.map((it) => {
         const item = Object.assign({}, it);
-        item.type = item.type || 'hotel';
+        item.type = item.type || "hotel";
         item.price = parseFloat(item.price) || 0;
-        if (item.type === 'meal') {
+        if (item.type === "meal") {
           item.quantity = parseInt(item.quantity) || 1;
         }
-        if (item.type === 'hotel') {
+        if (item.type === "hotel") {
           item.guests = parseInt(item.guests) || 1;
         }
         return item;
@@ -32,17 +32,23 @@ const cart = {
   // Add item to cart
   // Add item to cart (hotel or generic item). For hotels, pass type: 'hotel'.
   addItem(item) {
-    const existingItem = this.items.find((i) => i.id === item.id && i.type === (item.type || 'hotel'));
+    const existingItem = this.items.find(
+      (i) => i.id === item.id && i.type === (item.type || "hotel")
+    );
 
     if (existingItem) {
-      alert(item.type === 'meal' ? "This meal is already in your cart!" : "This hotel is already in your cart!");
+      alert(
+        item.type === "meal"
+          ? "This meal is already in your cart!"
+          : "This hotel is already in your cart!"
+      );
       return;
     }
 
-    if ((item.type || 'hotel') === 'hotel') {
+    if ((item.type || "hotel") === "hotel") {
       this.items.push({
         id: item.id,
-        type: 'hotel',
+        type: "hotel",
         name: item.name,
         location: item.location,
         price: parseFloat(item.price) || 0,
@@ -52,6 +58,8 @@ const cart = {
         checkOut: item.checkOut || "",
         guests: item.guests || 1,
         roomType: item.roomType || "Standard Room",
+        mealOptions: item.meal?.id || "room-only",
+        mealPrice: parseFloat(item.meal?.price) || 0,
       });
       this.save();
       this.updateCartCount();
@@ -60,9 +68,10 @@ const cart = {
     }
 
     // For any other generic type, push as-is but coerce numeric fields
-    const safeItem = Object.assign({ type: item.type || 'item' }, item);
+    const safeItem = Object.assign({ type: item.type || "item" }, item);
     safeItem.price = parseFloat(safeItem.price) || 0;
-    if (safeItem.quantity) safeItem.quantity = parseInt(safeItem.quantity) || safeItem.quantity;
+    if (safeItem.quantity)
+      safeItem.quantity = parseInt(safeItem.quantity) || safeItem.quantity;
     this.items.push(safeItem);
     this.save();
     this.updateCartCount();
@@ -70,36 +79,38 @@ const cart = {
   },
 
   // Convenience: add a meal to the cart
-  addMeal(meal) {
-    const existingMeal = this.items.find((i) => i.id === meal.id && i.type === 'meal');
-    if (existingMeal) {
-      // If meal already exists, increase quantity (coerce to numbers)
-      existingMeal.quantity = (existingMeal.quantity || 1) + (parseInt(meal.quantity) || 1);
-      this.save();
-      this.updateCartCount();
-      this.showNotification("Meal quantity updated in cart!");
-      return;
-    }
+  // addMeal(meal) {
+  //   const existingMeal = this.items.find((i) => i.id === meal.id && i.type === 'meal');
+  //   if (existingMeal) {
+  //     // If meal already exists, increase quantity (coerce to numbers)
+  //     existingMeal.quantity = (existingMeal.quantity || 1) + (parseInt(meal.quantity) || 1);
+  //     this.save();
+  //     this.updateCartCount();
+  //     this.showNotification("Meal quantity updated in cart!");
+  //     return;
+  //   }
 
-    this.items.push({
-      id: meal.id,
-      type: 'meal',
-      name: meal.name,
-      price: parseFloat(meal.price) || 0,
-      image: meal.image || meal.img || '',
-      quantity: parseInt(meal.quantity) || 1,
-      notes: meal.notes || '',
-    });
+  //   this.items.push({
+  //     id: meal.id,
+  //     type: 'meal',
+  //     name: meal.name,
+  //     price: parseFloat(meal.price) || 0,
+  //     image: meal.image || meal.img || '',
+  //     quantity: parseInt(meal.quantity) || 1,
+  //     notes: meal.notes || '',
+  //   });
 
-    this.save();
-    this.updateCartCount();
-    this.showNotification("Meal added to cart!");
-  },
+  //   this.save();
+  //   this.updateCartCount();
+  //   this.showNotification("Meal added to cart!");
+  // },
 
   // Remove item from cart
   removeItem(itemId, itemType) {
     if (itemType) {
-      this.items = this.items.filter((item) => !(item.id === itemId && item.type === itemType));
+      this.items = this.items.filter(
+        (item) => !(item.id === itemId && item.type === itemType)
+      );
     } else {
       this.items = this.items.filter((item) => item.id !== itemId);
     }
@@ -119,9 +130,12 @@ const cart = {
 
     if (item) {
       // Coerce numeric updates to proper types
-      if (updates.price !== undefined) updates.price = parseFloat(updates.price) || 0;
-      if (updates.quantity !== undefined) updates.quantity = parseInt(updates.quantity) || 0;
-      if (updates.guests !== undefined) updates.guests = parseInt(updates.guests) || item.guests || 1;
+      if (updates.price !== undefined)
+        updates.price = parseFloat(updates.price) || 0;
+      if (updates.quantity !== undefined)
+        updates.quantity = parseInt(updates.quantity) || 0;
+      if (updates.guests !== undefined)
+        updates.guests = parseInt(updates.guests) || item.guests || 1;
       Object.assign(item, updates);
       this.save();
       this.renderCart();
@@ -131,11 +145,13 @@ const cart = {
   // Calculate total
   getTotal() {
     return this.items.reduce((total, item) => {
-      if (item.type === 'hotel') {
+      if (item.type === "hotel") {
         const nights = this.calculateNights(item.checkIn, item.checkOut);
-        return total + item.price * nights;
+        const roomTotal = item.price * nights;
+        const mealTotal = (item.mealPrice || 0) * nights;
+        return total + roomTotal + mealTotal;
       }
-      if (item.type === 'meal') {
+      if (item.type === "meal") {
         return total + item.price * (item.quantity || 1);
       }
       // generic item
@@ -161,7 +177,10 @@ const cart = {
   updateCartCount() {
     const cartBadge = document.getElementById("cartCount");
     if (cartBadge) {
-      const count = this.items.reduce((sum, i) => sum + (i.type === 'meal' ? (i.quantity || 1) : 1), 0);
+      const count = this.items.reduce(
+        (sum, i) => sum + (i.type === "meal" ? i.quantity || 1 : 1),
+        0
+      );
       cartBadge.textContent = count;
       cartBadge.style.display = count > 0 ? "flex" : "none";
     }
@@ -210,23 +229,32 @@ const cart = {
     // Render cart items (hotels and meals)
     cartContainer.innerHTML = this.items
       .map((item) => {
-        if (item.type === 'meal') {
+        if (item.type === "meal") {
           const mealTotal = (item.price || 0) * (item.quantity || 1);
           // If item.price was saved as a total (quantity=1), show as total; otherwise show per-unit
-          const priceLabel = (item.quantity && item.quantity > 1)
-            ? `$${((item.price || 0) / (item.quantity || 1)).toFixed(2)} each`
-            : `Price: $${(item.price || 0).toLocaleString()}`;
+          const priceLabel =
+            item.quantity && item.quantity > 1
+              ? `$${((item.price || 0) / (item.quantity || 1)).toFixed(2)} each`
+              : `Price: $${(item.price || 0).toLocaleString()}`;
           return `
-          <div class="bg-white rounded-lg shadow-lg p-6 mb-4" data-item-id="${item.id}" data-item-type="meal">
+          <div class="bg-white rounded-lg shadow-lg p-6 mb-4" data-item-id="${
+            item.id
+          }" data-item-type="meal">
             <div class="flex items-center gap-6">
                   <i class="fas fa-utensils text-[#003262] text-3xl"></i>
               <div class="flex-1">
                 <div class="flex justify-between items-start mb-2">
                   <div>
-                    <h3 class="text-xl font-bold text-gray-900">${item.name}</h3>
-                    <p class="text-sm text-gray-600 mt-1">${item.notes || ''}</p>
+                    <h3 class="text-xl font-bold text-gray-900">${
+                      item.name
+                    }</h3>
+                    <p class="text-sm text-gray-600 mt-1">${
+                      item.notes || ""
+                    }</p>
                   </div>
-                  <button onclick="cart.removeItem('${item.id}','meal')" class="text-red-500 hover:text-red-700">
+                  <button onclick="cart.removeItem('${
+                    item.id
+                  }','meal')" class="text-red-500 hover:text-red-700">
                     <i class="fas fa-trash-alt text-xl"></i>
                   </button>
                 </div>
@@ -244,13 +272,22 @@ const cart = {
         }
 
         // default: hotel
+        // const nights = this.calculateNights(item.checkIn, item.checkOut);
+        // const itemTotal = (item.price || 0) * nights;
+
         const nights = this.calculateNights(item.checkIn, item.checkOut);
-        const itemTotal = (item.price || 0) * nights;
+        const roomTotal = (item.price || 0) * nights;
+        const mealTotal = (item.mealPrice || 0) * nights;
+        const itemTotal = roomTotal + mealTotal;
 
         return `
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-4" data-item-id="${item.id}" data-item-type="hotel">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4" data-item-id="${
+          item.id
+        }" data-item-type="hotel">
           <div class="flex flex-col md:flex-row gap-6">
-            <img src="${item.image}" alt="${item.name}" class="w-full md:w-48 h-32 object-cover rounded-lg">
+            <img src="${item.image}" alt="${
+          item.name
+        }" class="w-full md:w-48 h-32 object-cover rounded-lg">
             
             <div class="flex-1">
               <div class="flex justify-between items-start mb-4">
@@ -264,7 +301,9 @@ const cart = {
                     ${this.renderStars(item.rating)}
                   </div>
                 </div>
-                <button onclick="cart.removeItem('${item.id}','hotel')" class="text-red-500 hover:text-red-700">
+                <button onclick="cart.removeItem('${
+                  item.id
+                }','hotel')" class="text-red-500 hover:text-red-700">
                   <i class="fas fa-trash-alt text-xl"></i>
                 </button>
               </div>
@@ -273,24 +312,38 @@ const cart = {
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Check-in</label>
                   <input type="date" value="${item.checkIn}" 
-                    onchange="cart.updateItem('${item.id}', {checkIn: this.value}, 'hotel')"
+                    onchange="cart.updateItem('${
+                      item.id
+                    }', {checkIn: this.value}, 'hotel')"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Check-out</label>
                   <input type="date" value="${item.checkOut}"
-                    onchange="cart.updateItem('${item.id}', {checkOut: this.value}, 'hotel')"
+                    onchange="cart.updateItem('${
+                      item.id
+                    }', {checkOut: this.value}, 'hotel')"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Guests</label>
                   <select value="${item.guests}"
-                    onchange="cart.updateItem('${item.id}', {guests: parseInt(this.value)}, 'hotel')"
+                    onchange="cart.updateItem('${
+                      item.id
+                    }', {guests: parseInt(this.value)}, 'hotel')"
                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
-                    <option value="1" ${item.guests === 1 ? "selected" : ""}>1 Guest</option>
-                    <option value="2" ${item.guests === 2 ? "selected" : ""}>2 Guests</option>
-                    <option value="3" ${item.guests === 3 ? "selected" : ""}>3 Guests</option>
-                    <option value="4" ${item.guests === 4 ? "selected" : ""}>4+ Guests</option>
+                    <option value="1" ${
+                      item.guests === 1 ? "selected" : ""
+                    }>1 Guest</option>
+                    <option value="2" ${
+                      item.guests === 2 ? "selected" : ""
+                    }>2 Guests</option>
+                    <option value="3" ${
+                      item.guests === 3 ? "selected" : ""
+                    }>3 Guests</option>
+                    <option value="4" ${
+                      item.guests === 4 ? "selected" : ""
+                    }>4+ Guests</option>
                   </select>
                 </div>
                 <div>
@@ -300,14 +353,25 @@ const cart = {
                 </div>
               </div>
               
-              <div class="flex justify-between items-center pt-4 border-t">
-                <div>
-                  <span class="text-sm text-gray-600">${nights} night${nights > 1 ? "s" : ""} × $${item.price}</span>
-                </div>
-                <div class="text-right">
-                  <span class="text-2xl font-bold text-[#003262]">$${itemTotal.toLocaleString()}</span>
-                </div>
-              </div>
+            <div class="flex justify-between items-center pt-4 border-t">
+  <div>
+    <span class="text-sm text-gray-600">${nights} night${
+          nights > 1 ? "s" : ""
+        } × $${item.price}</span>
+    ${
+      item.mealOptions && item.mealOptions !== "Room Only"
+        ? `
+      <br><span class="text-sm text-gray-600">${
+        item.mealOptions
+      }: ${nights} night${nights > 1 ? "s" : ""} × $${item.mealPrice}</span>
+    `
+        : ""
+    }
+  </div>
+  <div class="text-right">
+    <span class="text-2xl font-bold text-[#003262]">$${itemTotal.toLocaleString()}</span>
+  </div>
+</div>
             </div>
           </div>
         </div>
@@ -318,7 +382,7 @@ const cart = {
     // Render summary
     if (cartSummary) {
       const subtotal = this.getTotal();
-      const hotelCount = this.items.filter(i => i.type === 'hotel').length;
+      const hotelCount = this.items.filter((i) => i.type === "hotel").length;
       const totalItems = this.items.length;
       const serviceFee = hotelCount * 50; // service fee applies per hotel booking
       const total = subtotal + serviceFee;
@@ -329,7 +393,9 @@ const cart = {
 
           <div class="space-y-3 mb-6">
             <div class="flex justify-between text-gray-600">
-              <span>Subtotal (${totalItems} item${totalItems > 1 ? 's' : ''})</span>
+              <span>Subtotal (${totalItems} item${
+        totalItems > 1 ? "s" : ""
+      })</span>
               <span class="font-semibold">$${subtotal.toLocaleString()}</span>
             </div>
             <div class="flex justify-between text-gray-600">
@@ -392,5 +458,3 @@ document.addEventListener("DOMContentLoaded", () => {
     cart.renderCart();
   }
 });
-
-

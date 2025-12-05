@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cart.init();
   loadUserProfile();
   loadBookingHistory();
+  filterBookings('all');
 });
 
 // Load user profile from localStorage
@@ -52,19 +53,29 @@ function loadUserProfile() {
   document.getElementById("memberSince").textContent = memberSince;
 }
 
-// Load booking history from localStorage
-function loadBookingHistory() {
-  // Get all bookings from localStorage
-  const bookingsStr = localStorage.getItem("userBookings");
-
-  if (bookingsStr) {
-    try {
-      allBookings = JSON.parse(bookingsStr);
-    } catch (e) {
-      allBookings = [];
-    }
+// Load booking history from database
+async function loadBookingHistory() {
+  if (!currentUser || !currentUser.id) {
+    console.log("no logged in user");
+    return;
   }
 
+  try {
+    const response = await fetch(
+      `http://localhost:3001/bookings?userId=${currentUser.id}`
+    );
+    if (response.ok) {
+      allBookings = await response.json();
+    } else {
+      console.error("Failed to fetch bookings");
+      allBookings = [];
+    }
+  } catch (error) {
+    console.error("Error loading bookings:", error);
+    allBookings = [];
+  }
+
+<<<<<<< HEAD
   // Filter bookings for current user
   if (currentUser && currentUser.email) {
     allBookings = allBookings.filter(
@@ -73,74 +84,12 @@ function loadBookingHistory() {
   }
 
   // Add mock data if no bookings exist (for demonstration)
-  if (allBookings.length === 0) {
-    allBookings = generateMockBookings();
-  }
 
   // Calculate statistics
+=======
+>>>>>>> 62d28c0 (last version yarab y3ny)
   calculateStatistics();
-
-  // Display bookings
   displayBookings();
-}
-
-// Generate mock bookings for demonstration
-function generateMockBookings() {
-  const mockBookings = [
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Nile Luxury Resort",
-      location: "Cairo, Egypt",
-      image:
-        "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400",
-      checkIn: "2024-11-15",
-      checkOut: "2024-11-18",
-      guests: 2,
-      roomType: "Deluxe Room",
-      totalAmount: 5443,
-      status: "confirmed",
-      bookingDate: "2024-10-20",
-      email: currentUser?.email || "user@example.com",
-    },
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Red Sea Paradise",
-      location: "Hurghada, Red Sea",
-      image:
-        "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400",
-      checkIn: "2024-10-05",
-      checkOut: "2024-10-10",
-      guests: 2,
-      roomType: "Sea View Room",
-      totalAmount: 4850,
-      status: "confirmed",
-      bookingDate: "2024-09-15",
-      email: currentUser?.email || "user@example.com",
-    },
-    {
-      confirmationNumber:
-        "HTLA-2024-" + Math.random().toString(36).substr(2, 6).toUpperCase(),
-      hotelName: "Aswan Oasis Retreat",
-      location: "Aswan, Upper Egypt",
-      image: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400",
-      checkIn: "2024-08-20",
-      checkOut: "2024-08-23",
-      guests: 3,
-      roomType: "Suite",
-      totalAmount: 3950,
-      status: "cancelled",
-      bookingDate: "2024-08-01",
-      cancellationDate: "2024-08-18",
-      email: currentUser?.email || "user@example.com",
-    },
-  ];
-
-  // Save mock bookings
-  localStorage.setItem("userBookings", JSON.stringify(mockBookings));
-
-  return mockBookings;
 }
 
 // Calculate user statistics
@@ -305,6 +254,54 @@ function displayBookings() {
     `;
     })
     .join("");
+}
+
+async function cancelBooking(bookingId, confirmationNumber) {
+  const confirm = confirm(
+    `Are you sure you want to cancel booking ${confirmationNumber}?`
+  );
+  if (!confirm) return;
+
+  try {
+    // Fetch existing booking
+    const response = await fetch(`http://localhost:3001/bookings/${bookingId}`);
+    if (!response.ok) {
+      return showToast("Failed to fetch booking details.", "error");
+    }
+
+    const booking = await response.json();
+
+    const updatedBooking = {
+      ...booking,
+      status: "cancelled",
+      cancellationDate: new Date().toISOString(),
+      cancellationReason: "Cancelled by user",
+    };
+
+    // Update booking in database
+    const updatedResponse = await fetch(
+      `http://localhost:3001/bookings/${bookingId}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedBooking),
+      }
+    );
+
+    if (updatedResponse.ok) {
+      showToast("Booking cancelled successfully.", "success");
+
+      // Refresh booking history to reflect changes
+      await loadBookingHistory();
+    } else {
+      showToast("Failed to cancel booking.", "error");
+    }
+  } catch (error) {
+    console.error("Error cancelling booking:", error);
+    showToast("An error occurred while cancelling the booking.", "error");
+  }
 }
 
 // Filter bookings
